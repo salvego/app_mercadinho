@@ -2,7 +2,7 @@
 
 Aplicativo Mercadinho
 
-Aplicativo desenvolvido em Flutter
+Aplicativo desenvolvido em Flutter/ Back end em Parse Server
 
 ## Getting Started
 
