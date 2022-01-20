@@ -1,3 +1,4 @@
+import 'package:app_mercadinho/src/api/auth/api_logout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
@@ -18,7 +19,10 @@ class _ProfileTabState extends State<ProfileTab> {
         title: const Text('Perfil do usuário'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              print('Sair');
+              userLogout(context);
+            },
             icon: const Icon(
               Icons.logout,
             ),

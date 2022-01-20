@@ -4,9 +4,14 @@ import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
 import 'package:app_mercadinho/src/pages/auth/sign_up_screen.dart';
 import 'package:app_mercadinho/src/pages/base/base_screen.dart';
+import 'package:app_mercadinho/src/api/auth/api_login.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({Key? key}) : super(key: key);
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+  bool isLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -89,16 +94,19 @@ class SignInScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Email
-                    const CustomTextField(
-                      icon: Icons.email,
-                      label: 'Email',
+                    TextFormField(
+                      controller: emailController,
+                      decoration: const InputDecoration(hintText: 'E-mail'),
+                      keyboardType: TextInputType.emailAddress,
+                      autocorrect: false,
                     ),
 
                     // Senha
-                    const CustomTextField(
-                      icon: Icons.lock,
-                      label: 'Senha',
-                      isSecret: true,
+                    TextFormField(
+                      controller: passController,
+                      decoration: const InputDecoration(hintText: 'Password'),
+                      autocorrect: false,
+                      obscureText: true,
                     ),
 
                     // Botão de entrar
@@ -111,10 +119,13 @@ class SignInScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacement(MaterialPageRoute(builder: (c) {
-                            return BaseScreen();
-                          }));
+                          if (isLoggedIn == true) {
+                            print('Usuário já está logado!');
+                          } else {
+
+                            userLogin(emailController.text,
+                                passController.text, context);
+                          };
                         },
                         child: const Text(
                           'Entrar',
