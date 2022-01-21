@@ -1,9 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
-import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
 import 'package:app_mercadinho/src/pages/auth/sign_up_screen.dart';
-import 'package:app_mercadinho/src/pages/base/base_screen.dart';
 import 'package:app_mercadinho/src/api/auth/api_login.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -120,12 +118,12 @@ class SignInScreen extends StatelessWidget {
                         ),
                         onPressed: () {
                           if (isLoggedIn == true) {
-                            print('Usuário já está logado!');
+
                           } else {
 
                             userLogin(emailController.text,
                                 passController.text, context);
-                          };
+                          }
                         },
                         child: const Text(
                           'Entrar',

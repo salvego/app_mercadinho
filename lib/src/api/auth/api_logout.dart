@@ -4,13 +4,13 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
  Future<Object> userLogout(BuildContext context) async {
 
+    final ParseCloudFunction function = ParseCloudFunction('logout');
+    
+    final ParseResponse parseResponse =
+    await function.execute();
+   
 
-   print(await ParseUser.currentUser() as ParseUser);
-
-   final user = await ParseUser.currentUser() as ParseUser;
-    var response = await user.logout();
-
-    if (response.success) {
+    if (parseResponse.success) {
       return Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (c) {
             return SignInScreen();
