@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/auth/sign_up_screen.dart';
@@ -9,7 +10,7 @@ class SignInScreen extends StatelessWidget {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
-  bool isLoggedIn = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +122,10 @@ class SignInScreen extends StatelessWidget {
 
                           } else {
 
-                            userLogin(emailController.text,
-                                passController.text, context);
+                            userLogin(
+                                emailController.text,
+                                passController.text,
+                                context);
                           }
                         },
                         child: const Text(

@@ -1,4 +1,6 @@
+import 'package:app_mercadinho/src/api/auth/api_change_password.dart';
 import 'package:app_mercadinho/src/api/auth/api_logout.dart';
+import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
 import 'package:app_mercadinho/src/config/app_data.dart' as appData;
@@ -88,6 +90,12 @@ class _ProfileTabState extends State<ProfileTab> {
   }
 
   Future<bool?> updatePassword() {
+
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController currentPassController = TextEditingController();
+    final TextEditingController newPassController = TextEditingController();
+
+
     return showDialog(
       context: context,
       builder: (context) {
@@ -116,25 +124,28 @@ class _ProfileTabState extends State<ProfileTab> {
                       ),
                     ),
 
-                    // Senha atual
-                    const CustomTextField(
+                    // E-mail
+                     CustomTextField(
+                      controller: emailController,
                       isSecret: true,
                       icon: Icons.lock,
-                      label: 'Senha atual',
+                      label: 'E-mail',
+                    ),
+
+                    // Senha Atual
+                     CustomTextField(
+                      controller: currentPassController,
+                      isSecret: true,
+                      icon: Icons.lock_outline,
+                      label: 'Senha Atual',
                     ),
 
                     // Nova senha
-                    const CustomTextField(
+                     CustomTextField(
+                      controller: newPassController,
                       isSecret: true,
                       icon: Icons.lock_outline,
                       label: 'Nova senha',
-                    ),
-
-                    // Confirmação nova senha
-                    const CustomTextField(
-                      isSecret: true,
-                      icon: Icons.lock_outline,
-                      label: 'Confirmar nova senha',
                     ),
 
                     // Botão de confirmação
@@ -146,7 +157,17 @@ class _ProfileTabState extends State<ProfileTab> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          print(
+                            emailController.text +
+                                currentPassController.text +
+                            newPassController.text + ' - ' + myCurrentSessionToken);
+                          changePasssword(
+                              emailController.text,
+                              currentPassController.text,
+                              newPassController.text,
+                              context);
+                        },
                         child: const Text('Atualizar'),
                       ),
                     ),

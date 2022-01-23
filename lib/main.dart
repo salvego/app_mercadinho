@@ -7,8 +7,12 @@ void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Parse().initialize(key_back4app.keyApplicationId, key_back4app.keyParseServerUrl,
-      clientKey: key_back4app.keyClientKey, autoSendSessionId: true);
+  await Parse().initialize(
+      key_back4app.keyApplicationId,
+      key_back4app.keyParseServerUrl,
+      clientKey: key_back4app.keyClientKey,
+      autoSendSessionId: true,
+  );
 
   runApp(const MyApp());
 }
