@@ -14,7 +14,7 @@ void userLogout(BuildContext context) async {
 
     if (parseResponse.success) {
 
-      isLoggedIn = false;
+      goUser.isLoggedIn = false;
 
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (c) {

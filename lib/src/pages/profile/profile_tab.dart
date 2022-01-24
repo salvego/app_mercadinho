@@ -36,7 +36,7 @@ class _ProfileTabState extends State<ProfileTab> {
           // Email
           CustomTextField(
             readOnly: true,
-            initialValue: appData.user.email,
+            initialValue: goUser.email,
             icon: Icons.email,
             label: 'Email',
           ),
@@ -44,7 +44,7 @@ class _ProfileTabState extends State<ProfileTab> {
           // Nome
           CustomTextField(
             readOnly: true,
-            initialValue: appData.user.name,
+            initialValue: goUser.usuario,
             icon: Icons.person,
             label: 'Nome',
           ),
@@ -52,7 +52,7 @@ class _ProfileTabState extends State<ProfileTab> {
           // Celular
           CustomTextField(
             readOnly: true,
-            initialValue: appData.user.phone,
+            initialValue: goUser.phone,
             icon: Icons.phone,
             label: 'Celular',
           ),
@@ -60,7 +60,7 @@ class _ProfileTabState extends State<ProfileTab> {
           // CPF
           CustomTextField(
             readOnly: true,
-            initialValue: appData.user.cpf,
+            initialValue: goUser.cpf,
             icon: Icons.file_copy,
             label: 'CPF',
             isSecret: true,

@@ -1,3 +1,4 @@
+import 'package:app_mercadinho/src/api/product/api_get_category_list.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:app_mercadinho/src/helpers/message.dart';
 import 'package:app_mercadinho/src/pages/base/base_screen.dart';
@@ -20,20 +21,27 @@ void userLogin(String email, String password , BuildContext context) async {
 
     if (parseResponse.success) {
 
-      myCurrentSessionToken = parseResponse.result['token'];
+      goUser.myCurrentSessionToken = parseResponse.result['token'];
+      goUser.id = parseResponse.result['id'];
+      goUser.usuario = parseResponse.result['fullname'];
+      goUser.email = parseResponse.result['email'];
+      goUser.phone = parseResponse.result['phone'];
+      goUser.cpf = parseResponse.result['cpf'];
 
       await Parse().initialize(
       key_back4app.keyApplicationId,
       key_back4app.keyParseServerUrl,
       clientKey: key_back4app.keyClientKey,
-      sessionId: myCurrentSessionToken);
+      sessionId: goUser.myCurrentSessionToken);
 
-      isLoggedIn = true;
+      goUser.isLoggedIn = true;
 
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (c) {
             return const BaseScreen();
           }));
+
+      getCategoryList();
 
     } else {
 

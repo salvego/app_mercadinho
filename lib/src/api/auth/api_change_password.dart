@@ -21,7 +21,7 @@ void changePasssword(String email, String currentPassword , String newPassword, 
 
   if (parseResponse.success) {
 
-    isLoggedIn = false;
+    goUser.isLoggedIn = false;
 
     await Parse().initialize(
       key_back4app.keyApplicationId,

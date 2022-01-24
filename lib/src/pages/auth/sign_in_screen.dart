@@ -119,7 +119,7 @@ class SignInScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          if (isLoggedIn == true) {
+                          if (goUser.isLoggedIn == true) {
 
                           } else {
 
