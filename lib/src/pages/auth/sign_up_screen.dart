@@ -1,3 +1,4 @@
+import 'package:app_mercadinho/src/api/auth/api_new_user.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
@@ -5,6 +6,12 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController cpfController = TextEditingController();
 
   final cpfFormatter = MaskTextInputFormatter(
     mask: '###.###.###-##',
@@ -57,25 +64,30 @@ class SignUpScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const CustomTextField(
+                        CustomTextField(
+                          controller: emailController,
                           icon: Icons.email,
                           label: 'Email',
                         ),
-                        const CustomTextField(
+                        CustomTextField(
+                          controller: passController,
                           icon: Icons.lock,
                           label: 'Senha',
                           isSecret: true,
                         ),
-                        const CustomTextField(
+                        CustomTextField(
+                          controller: nameController,
                           icon: Icons.person,
                           label: 'Nome',
                         ),
                         CustomTextField(
+                          controller: phoneController,
                           icon: Icons.phone,
                           label: 'Celular',
                           inputFormatters: [phoneFormatter],
                         ),
                         CustomTextField(
+                          controller: cpfController,
                           icon: Icons.file_copy,
                           label: 'CPF',
                           inputFormatters: [cpfFormatter],
@@ -89,7 +101,14 @@ class SignUpScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-
+                              newUser(
+                                  emailController.text,
+                                  passController.text,
+                                  nameController.text,
+                                  phoneController.text,
+                                  cpfController.text,
+                                  context,
+                              );
                             },
                             child: const Text(
                               'Cadastrar usuário',

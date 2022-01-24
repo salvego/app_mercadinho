@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:app_mercadinho/src/api/auth/api_reset_password.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
@@ -141,7 +142,11 @@ class SignInScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          resetPassword(
+                              context,
+                          );
+                        },
                         child: Text(
                           'Esqueceu a senha?',
                           style: TextStyle(

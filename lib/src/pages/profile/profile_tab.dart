@@ -127,7 +127,6 @@ class _ProfileTabState extends State<ProfileTab> {
                     // E-mail
                      CustomTextField(
                       controller: emailController,
-                      isSecret: true,
                       icon: Icons.lock,
                       label: 'E-mail',
                     ),
@@ -158,10 +157,7 @@ class _ProfileTabState extends State<ProfileTab> {
                           ),
                         ),
                         onPressed: () {
-                          print(
-                            emailController.text +
-                                currentPassController.text +
-                            newPassController.text + ' - ' + myCurrentSessionToken);
+
                           changePasssword(
                               emailController.text,
                               currentPassController.text,
