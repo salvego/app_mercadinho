@@ -43,7 +43,7 @@ void userLogin(String email, String password , BuildContext context) async {
           }));
 
 
-      getCategoryList2();
+      print(categorysNames);
 
 
     } else {
