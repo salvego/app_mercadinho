@@ -5,6 +5,7 @@ import 'package:app_mercadinho/src/pages/base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:app_mercadinho/src/config/key_back4app.dart' as key_back4app;
+import 'package:app_mercadinho/src/config/app_data.dart' as appData;
 
 void userLogin(String email, String password , BuildContext context) async {
 
@@ -41,7 +42,9 @@ void userLogin(String email, String password , BuildContext context) async {
             return const BaseScreen();
           }));
 
-      getCategoryList();
+
+      getCategoryList2();
+
 
     } else {
 

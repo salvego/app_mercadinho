@@ -1,7 +1,20 @@
 
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-void getCategoryList() async {
+
+List<String> myList = [];
+
+ void getCategoryList2() async {
+  final ParseCloudFunction function = ParseCloudFunction('get-category-list');
+  final ParseResponse parseResponse = await function.execute();
+
+  if (parseResponse.success && parseResponse.result != null) {
+    print(parseResponse.result[0]['title']);
+  }
+
+}
+
+/*void getCategoryList() async {
 
   List<String> category = [];
 
@@ -14,6 +27,18 @@ void getCategoryList() async {
 
   }
 
-  return print(category);
+  category;
 
-}
+}*/
+
+//List<String> Lista = [
+//  getCategoryList
+//]
+
+
+
+
+//final List<String> category = getCategoryList as List<String>;
+//final List<String> category = List<String>.from(getCategoryList as List<String>);
+
+
