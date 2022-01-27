@@ -1,52 +1,36 @@
 
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-class Lista  {
-
-  static Future lista() async{
-
-    final ParseCloudFunction function = ParseCloudFunction('get-category-list');
-    final ParseResponse parseResponse = await function.execute();
-
-    if (parseResponse.success && parseResponse.result != null) {
-      return parseResponse.result[0]['title'];
-    }
-    else{
-      return [];
-    }
-  }
-
-
-}
-
 class Category {
   const Category(this.name);
 
   final String name;
 }
 
+
 List<Category> categorys = [
-  Category('A'),
-  Category('B'),
-  Category('C'),
 ];
 
-final List<String> categorysNames = categorys.map((category) => category.name).toList();
 
-/* List<String> myList = [];
-
-List<String> getCategoryList2() async {
+void getCategoryList2() async {
   final ParseCloudFunction function = ParseCloudFunction('get-category-list');
   final ParseResponse parseResponse = await function.execute();
 
-  if (parseResponse.success && parseResponse.result != null) {
-    return parseResponse.result[0]['title'];
-  }
-  else{
-    return [];
-  }
+  for(var item in parseResponse.result ) {
 
-} */
+    print(item['title']);
+
+    categorys.add(item['title']);
+
+  }
+  print(categorys);
+}
+
+
+final List<String> categorysNames = categorys.map((category) => category.name).toList();
+
+
+
 
 /*void getCategoryList() async {
 

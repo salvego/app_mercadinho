@@ -42,7 +42,7 @@ void userLogin(String email, String password , BuildContext context) async {
             return const BaseScreen();
           }));
 
-
+      getCategoryList2();
       print(categorysNames);
 
 
