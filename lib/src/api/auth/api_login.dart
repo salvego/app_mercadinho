@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app_mercadinho/src/api/product/api_get_category_list.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:app_mercadinho/src/helpers/message.dart';
@@ -42,9 +44,18 @@ void userLogin(String email, String password , BuildContext context) async {
             return const BaseScreen();
           }));
 
-      getCategoryList2();
-      print(categorysNames);
+   
 
+      List _toDoList = [];
+      getCategoryList2().then((data) {
+
+        print(json.decode(data!));
+     
+        //_toDoList = json.decode(data!);
+     
+      });
+
+      //print(_toDoList[0]["title"]);
 
     } else {
 

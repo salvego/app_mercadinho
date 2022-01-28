@@ -12,22 +12,13 @@ List<Category> categorys = [
 ];
 
 
-void getCategoryList2() async {
+Future<String?> getCategoryList2() async {
   final ParseCloudFunction function = ParseCloudFunction('get-category-list');
   final ParseResponse parseResponse = await function.execute();
 
-  for(var item in parseResponse.result ) {
-
-    print(item['title']);
-
-    categorys.add(item['title']);
-
-  }
-  print(categorys);
+  return parseResponse.result as String;
 }
 
-
-final List<String> categorysNames = categorys.map((category) => category.name).toList();
 
 
 
