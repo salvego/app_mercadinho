@@ -12,11 +12,11 @@ List<Category> categorys = [
 ];
 
 
-Future<String?> getCategoryList2() async {
+getCategoryList2() async {
   final ParseCloudFunction function = ParseCloudFunction('get-category-list');
   final ParseResponse parseResponse = await function.execute();
 
-  return parseResponse.result as String;
+  return parseResponse.result;
 }
 
 
