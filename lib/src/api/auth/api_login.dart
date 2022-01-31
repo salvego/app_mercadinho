@@ -46,10 +46,10 @@ void userLogin(String email, String password , BuildContext context) async {
 
    
 
-      //List _toDoList = [];
+      List _toDoList = [];
       //print(getCategoryList2());
 
-      getCategoryList2().then((id) => print("Id that was loaded: $id"));
+      getCategoryList2().then((id) => _toDoList = "$id" as List;   //print("Id that was loaded: $id"));
 
       //print(_toDoList[0]["title"]);
 

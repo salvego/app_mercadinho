@@ -13,10 +13,19 @@ List<Category> categorys = [
 
 
 getCategoryList2() async {
+
+  List<String> category = [];
+
   final ParseCloudFunction function = ParseCloudFunction('get-category-list');
   final ParseResponse parseResponse = await function.execute();
 
-  return parseResponse.result;
+  for(var item in parseResponse.result ) {
+
+    category.add(item['title']);
+
+  }
+
+  return category;
 }
 
 
