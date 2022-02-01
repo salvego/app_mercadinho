@@ -9,53 +9,59 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:app_mercadinho/src/config/key_back4app.dart' as key_back4app;
 import 'package:app_mercadinho/src/config/app_data.dart' as appData;
 
-void userLogin(String email, String password , BuildContext context) async {
+void userLogin(String email, String password, BuildContext context) async {
+  final ParseCloudFunction function = ParseCloudFunction('login');
+  final Map<String, dynamic> params = <String, dynamic>{
+    'email': email,
+    'password': password
+  };
 
-    final ParseCloudFunction function = ParseCloudFunction('login');
-    final Map<String, dynamic> params = <String, dynamic>{
-      'email': email,
-      'password': password
-    };
+  final ParseResponse parseResponse =
+      await function.execute(parameters: params);
 
-    final ParseResponse parseResponse =
-    await function.execute(parameters: params);
+  if (parseResponse.success) {
+    goUser.myCurrentSessionToken = parseResponse.result['token'];
+    goUser.id = parseResponse.result['id'];
+    goUser.usuario = parseResponse.result['fullname'];
+    goUser.email = parseResponse.result['email'];
+    goUser.phone = parseResponse.result['phone'];
+    goUser.cpf = parseResponse.result['cpf'];
 
+    await Parse().initialize(
+        key_back4app.keyApplicationId, key_back4app.keyParseServerUrl,
+        clientKey: key_back4app.keyClientKey,
+        sessionId: goUser.myCurrentSessionToken);
 
+    goUser.isLoggedIn = true;
 
-    if (parseResponse.success) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (c) {
+      return const BaseScreen();
+    }));
 
-      goUser.myCurrentSessionToken = parseResponse.result['token'];
-      goUser.id = parseResponse.result['id'];
-      goUser.usuario = parseResponse.result['fullname'];
-      goUser.email = parseResponse.result['email'];
-      goUser.phone = parseResponse.result['phone'];
-      goUser.cpf = parseResponse.result['cpf'];
+    List<String> _toDoList = [];
+    //print(getCategoryList2());
 
-      await Parse().initialize(
-      key_back4app.keyApplicationId,
-      key_back4app.keyParseServerUrl,
-      clientKey: key_back4app.keyClientKey,
-      sessionId: goUser.myCurrentSessionToken);
+    getCategoryList2().then((id) {
+      //print("$id");
 
-      goUser.isLoggedIn = true;
+      dynamic category = "$id".split(",");
 
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (c) {
-            return const BaseScreen();
-          }));
+      print(category);
 
-   
+      for (var item in category) {
+        _toDoList.add(item[0]);
+      }
+    });
 
-      List _toDoList = [];
-      //print(getCategoryList2());
+    //print(_toDoList);
 
-      getCategoryList2().then((id) => _toDoList = "$id" as List;   //print("Id that was loaded: $id"));
+    //_toDoList = "$id" as List<String>
 
-      //print(_toDoList[0]["title"]);
+    //print("Id that was loaded: $id"));
 
-    } else {
+    //print(_toDoList[0]["title"]);
 
-      showError("User was fail login!", context);
-
-    }
- }
+  } else {
+    showError("User was fail login!", context);
+  }
+}
