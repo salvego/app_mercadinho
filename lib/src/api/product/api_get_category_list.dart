@@ -1,62 +1,22 @@
+import 'dart:convert';
 
+import 'package:app_mercadinho/src/models/category_model.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-class Category {
-  const Category(this.name);
-
-  final String name;
-}
-
-
-List<Category> categorys = [
-];
-
-
-getCategoryList2() async {
-
-  List<String> category = [];
+Future<List<CategoryModel>> getCategoryList() async {
 
   final ParseCloudFunction function = ParseCloudFunction('get-category-list');
   final ParseResponse parseResponse = await function.execute();
 
-  for(var item in parseResponse.result ) {
+  // for (var item in parseResponse.result) {
+  //   category.add(item['title']);
+  // }
 
-    category.add(item['title']);
+  //return category[index];
 
-  }
+  final List jsonDecoded = json.decode(parseResponse.result) as List;
 
-  return category;
+  return jsonDecoded.map((e) => CategoryModel.fromJson(e)).toList();
+
+  
 }
-
-
-
-
-
-/*void getCategoryList() async {
-
-  List<String> category = [];
-
-  final ParseCloudFunction function = ParseCloudFunction('get-category-list');
-  final ParseResponse parseResponse = await function.execute();
-
-  for(var item in parseResponse.result ) {
-
-    category.add(item['title']);
-
-  }
-
-  category;
-
-}*/
-
-//List<String> Lista = [
-//  getCategoryList
-//]
-
-
-
-
-//final List<String> category = getCategoryList as List<String>;
-//final List<String> category = List<String>.from(getCategoryList as List<String>);
-
-

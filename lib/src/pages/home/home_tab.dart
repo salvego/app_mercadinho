@@ -7,6 +7,8 @@ import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/home/components/category_tile.dart';
 import 'package:app_mercadinho/src/config/app_data.dart' as appData;
 import 'package:app_mercadinho/src/pages/home/components/item_tile.dart';
+import 'package:app_mercadinho/src/api/product/api_get_category_list.dart'
+    as apiCategory;
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -135,11 +137,12 @@ class _HomeTabState extends State<HomeTab> {
                 itemBuilder: (_, index) {
                   return CategoryTile(
                     onPressed: () {
-                      setState(() {
+                      setState(() async {
                         selectedCategory = appData.categories[index];
                       });
                     },
                     category: appData.categories[index],
+
                     isSelected: appData.categories[index] == selectedCategory,
                   );
                 },
@@ -173,3 +176,7 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 }
+
+// ListaDeCategory(int index) async {
+//   return await apiCategory.getCategoryList(index) as List;
+// }

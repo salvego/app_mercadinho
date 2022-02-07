@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:app_mercadinho/src/api/product/api_get_category_list.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:app_mercadinho/src/helpers/message.dart';
+import 'package:app_mercadinho/src/models/category_model.dart';
 import 'package:app_mercadinho/src/pages/base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -38,29 +39,7 @@ void userLogin(String email, String password, BuildContext context) async {
       return const BaseScreen();
     }));
 
-    List<String> _toDoList = [];
-    //print(getCategoryList2());
-
-    getCategoryList2().then((id) {
-      //print("$id");
-
-      dynamic category = "$id".split(",");
-
-      print(category);
-
-      for (var item in category) {
-        _toDoList.add(item[0]);
-      }
-    });
-
-    //print(_toDoList);
-
-    //_toDoList = "$id" as List<String>
-
-    //print("Id that was loaded: $id"));
-
-    //print(_toDoList[0]["title"]);
-
+    print(getCategoryList().toString());
   } else {
     showError("User was fail login!", context);
   }
