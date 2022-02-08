@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:app_mercadinho/src/models/category_model.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-Future<List<CategoryModel>> getCategoryList() async {
+Future<List> getCategoryList() async {
 
   final ParseCloudFunction function = ParseCloudFunction('get-category-list');
   final ParseResponse parseResponse = await function.execute();
@@ -12,11 +12,14 @@ Future<List<CategoryModel>> getCategoryList() async {
   //   category.add(item['title']);
   // }
 
-  //return category[index];
+  if (parseResponse.success) {
+    if (parseResponse.result != null) {
 
-  final List jsonDecoded = json.decode(parseResponse.result) as List;
+      return parseResponse.result.map((e) => CategoryModel.fromJson(e).title).toList();
 
-  return jsonDecoded.map((e) => CategoryModel.fromJson(e)).toList();
+    }
+  }
 
-  
+  return [];
+
 }

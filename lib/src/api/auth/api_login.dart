@@ -39,7 +39,11 @@ void userLogin(String email, String password, BuildContext context) async {
       return const BaseScreen();
     }));
 
-    print(getCategoryList().toString());
+//    var categories = await
+//    getCategoryList().then((value) => value);
+//
+//    print(categories);
+
   } else {
     showError("User was fail login!", context);
   }
