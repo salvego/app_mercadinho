@@ -4,17 +4,19 @@ import 'package:app_mercadinho/src/models/order_model.dart';
 import 'package:app_mercadinho/src/models/user_model.dart';
 
 ItemModel apple = ItemModel(
+  id: '1',
   description:
       'A melhor maçã da região e que conta com o melhor preço de qualquer quitanda. Este item conta com vitaminas essenciais para o fortalecimento corporal, resultando em uma vida saudável.',
-  imgUrl: 'assets/fruits/apple.png',
-  itemName: 'Maçã',
+  picture: 'assets/fruits/apple.png',
+  title: 'Maçã',
   price: 5.5,
   unit: 'kg',
 );
 
 ItemModel grape = ItemModel(
-  imgUrl: 'assets/fruits/grape.png',
-  itemName: 'Uva',
+  id: '2',
+  picture: 'assets/fruits/grape.png',
+  title: 'Uva',
   price: 7.4,
   unit: 'kg',
   description:
@@ -22,8 +24,9 @@ ItemModel grape = ItemModel(
 );
 
 ItemModel guava = ItemModel(
-  imgUrl: 'assets/fruits/guava.png',
-  itemName: 'Goiaba',
+  id: '3',
+  picture: 'assets/fruits/guava.png',
+  title: 'Goiaba',
   price: 11.5,
   unit: 'kg',
   description:
@@ -31,8 +34,9 @@ ItemModel guava = ItemModel(
 );
 
 ItemModel kiwi = ItemModel(
-  imgUrl: 'assets/fruits/kiwi.png',
-  itemName: 'Kiwi',
+  id: '4',
+  picture: 'assets/fruits/kiwi.png',
+  title: 'Kiwi',
   price: 2.5,
   unit: 'un',
   description:
@@ -40,8 +44,9 @@ ItemModel kiwi = ItemModel(
 );
 
 ItemModel mango = ItemModel(
-  imgUrl: 'assets/fruits/mango.png',
-  itemName: 'Manga',
+  id: '5',
+  picture: 'assets/fruits/mango.png',
+  title: 'Manga',
   price: 2.5,
   unit: 'un',
   description:
@@ -49,8 +54,9 @@ ItemModel mango = ItemModel(
 );
 
 ItemModel papaya = ItemModel(
-  imgUrl: 'assets/fruits/papaya.png',
-  itemName: 'Mamão papaya',
+  id: '6',
+  picture: 'assets/fruits/papaya.png',
+  title: 'Mamão papaya',
   price: 8,
   unit: 'kg',
   description:

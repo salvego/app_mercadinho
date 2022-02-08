@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_mercadinho/src/api/product/api_get_category_list.dart';
+import 'package:app_mercadinho/src/api/product/api_get_product_list.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:app_mercadinho/src/helpers/message.dart';
 import 'package:app_mercadinho/src/models/category_model.dart';
@@ -39,10 +40,13 @@ void userLogin(String email, String password, BuildContext context) async {
       return const BaseScreen();
     }));
 
-//    var categories = await
-//    getCategoryList().then((value) => value);
-//
-//    print(categories);
+    //var produts = await
+    //getProductList().then((value) => value);
+
+    //print(produts);
+
+    getProductList();
+
 
   } else {
     showError("User was fail login!", context);

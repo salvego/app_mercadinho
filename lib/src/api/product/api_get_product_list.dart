@@ -1,17 +1,18 @@
-
-
+import 'package:app_mercadinho/src/models/item_model.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-void getProductList() async {
+Future<List> getProductList() async {
   final ParseCloudFunction function = ParseCloudFunction('get-product-list');
   final ParseResponse parseResponse = await function.execute();
 
   if (parseResponse.success) {
     if (parseResponse.result != null) {
-      for (final todo in parseResponse.result) {
-        //Use fromJson method to convert map in ParseObject
-        print(ParseObject('Product').fromJson(todo));
-      }
+
+       return parseResponse.result
+           .map((e) => ItemModel.fromJson(e).title)
+           .toList();
     }
   }
+
+  return [];
 }

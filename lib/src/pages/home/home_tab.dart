@@ -28,16 +28,13 @@ class _HomeTabState extends State<HomeTab> {
 
     super.initState();
 
-
       getCategoryList().then((value) {
 
         setState(() {
-          print(value);
           categories = value;
         });
 
       });
-
   }
 
   GlobalKey<CartIconKey> globalKeyCartItems = GlobalKey<CartIconKey>();
