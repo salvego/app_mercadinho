@@ -1,6 +1,7 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:app_mercadinho/src/api/product/api_get_category_list.dart';
+import 'package:app_mercadinho/src/api/product/api_get_product_list.dart';
 import 'package:app_mercadinho/src/models/category_model.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _HomeTabState extends State<HomeTab> {
   String selectedCategory = 'Frutas';
 
   List categories = [];
+  List products = [] ;
 
   @override
   void initState() {
@@ -35,6 +37,15 @@ class _HomeTabState extends State<HomeTab> {
         });
 
       });
+
+      getProductList().then((value) {
+
+        setState((){
+          products = value;
+        });
+
+      });
+
   }
 
   GlobalKey<CartIconKey> globalKeyCartItems = GlobalKey<CartIconKey>();
@@ -192,10 +203,14 @@ class _HomeTabState extends State<HomeTab> {
                   crossAxisSpacing: 10,
                   childAspectRatio: 9 / 11.5,
                 ),
-                itemCount: appData.items.length,
+                //itemCount: appData.items.length,
+                itemCount: products.length,
+
                 itemBuilder: (_, index) {
                   return ItemTile(
-                      item: appData.items[index],
+                      //item: appData.items[index],
+                      item: products[index],
+
                       cartAnimationMethod: itemSelectedCartAnimations);
                 },
               ),

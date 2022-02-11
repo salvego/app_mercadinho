@@ -5,6 +5,7 @@ import 'package:app_mercadinho/src/api/product/api_get_product_list.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:app_mercadinho/src/helpers/message.dart';
 import 'package:app_mercadinho/src/models/category_model.dart';
+import 'package:app_mercadinho/src/models/item_model.dart';
 import 'package:app_mercadinho/src/pages/base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -40,12 +41,12 @@ void userLogin(String email, String password, BuildContext context) async {
       return const BaseScreen();
     }));
 
-    //var produts = await
-    //getProductList().then((value) => value);
+//    List produts = [] ;
+//    produts = await
+//    getProductList().then((value) => value);
+//
+//    print(produts[0].title);
 
-    //print(produts);
-
-    getProductList();
 
 
   } else {

@@ -20,7 +20,7 @@ class ItemModel {
         title = json['title'],
         picture = json['picture'],
         unit = json['unit'],
-        price = json['price'],
+        price = json['price'].toDouble(),
         description = json['description'];
 
   Map<String, dynamic> toJson() {

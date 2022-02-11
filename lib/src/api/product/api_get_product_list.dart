@@ -9,7 +9,7 @@ Future<List> getProductList() async {
     if (parseResponse.result != null) {
 
        return parseResponse.result
-           .map((e) => ItemModel.fromJson(e).title)
+           .map((e) => ItemModel.fromJson(e))
            .toList();
     }
   }

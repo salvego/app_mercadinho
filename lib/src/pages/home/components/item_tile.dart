@@ -36,7 +36,7 @@ class _ItemTileState extends State<ItemTile> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Conteúdo
+        // Conteúdo - AQUI ABRE O PRODUTO
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (c) {
@@ -57,8 +57,8 @@ class _ItemTileState extends State<ItemTile> {
                   // Imagem
                   Expanded(
                     child: Hero(
-                      tag: widget.item.picture,
-                      child: Image.asset(
+                      tag: widget.item.id,
+                      child: Image.network(
                         widget.item.picture,
                         key: imageGk,
                       ),
