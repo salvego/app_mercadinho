@@ -1,3 +1,4 @@
+import 'package:app_mercadinho/src/api/cart/api_get_cart_list.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/models/cart_item_model.dart';
@@ -15,6 +16,26 @@ class CartTab extends StatefulWidget {
 
 class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
+
+  List cartItems = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getCartItemsList().then((value) {
+
+      setState(() {
+        print(value);
+        cartItems = value;
+      });
+
+    });
+
+  }
+
+
 
   void removeItemFromCart(CartItemModel cartITem) {
     setState(() {
@@ -46,10 +67,14 @@ class _CartTabState extends State<CartTab> {
           // Lista de itens do carrinho
           Expanded(
             child: ListView.builder(
-              itemCount: appData.cartItems.length,
+              //itemCount: appData.cartItems.length,
+              itemCount: cartItems.length,
+
               itemBuilder: (_, index) {
                 return CartTile(
-                  cartItem: appData.cartItems[index],
+                  //cartItem: appData.cartItems[index],
+                  cartItem: cartItems[index],
+
                   remove: removeItemFromCart,
                 );
               },

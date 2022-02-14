@@ -1,6 +1,6 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
-import 'package:app_mercadinho/src/api/product/api_get_category_list.dart';
+import '../../api/category/api_get_category_list.dart';
 import 'package:app_mercadinho/src/api/product/api_get_product_list.dart';
 import 'package:app_mercadinho/src/models/category_model.dart';
 import 'package:badges/badges.dart';
@@ -9,7 +9,7 @@ import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/home/components/category_tile.dart';
 import 'package:app_mercadinho/src/config/app_data.dart' as appData;
 import 'package:app_mercadinho/src/pages/home/components/item_tile.dart';
-import 'package:app_mercadinho/src/api/product/api_get_category_list.dart'
+import '../../api/category/api_get_category_list.dart'
     as apiCategory;
 
 class HomeTab extends StatefulWidget {
@@ -38,7 +38,7 @@ class _HomeTabState extends State<HomeTab> {
 
       });
 
-      getProductList().then((value) {
+      getProductList(categoryId: 'HH7vSREpsb').then((value) {
 
         setState((){
           products = value;
@@ -169,17 +169,26 @@ class _HomeTabState extends State<HomeTab> {
                       setState(() {
                         //selectedCategory = appData.categories[index];
 
-                        selectedCategory = categories[index];
+                        selectedCategory = categories[index].title;
+
+                        getProductList(page: 0, itemsPerPage:5, categoryId: categories[index].id).then((value) {
+
+                          setState((){
+                            products = value;
+                          });
+
+                        });
+
 
                       });
                     },
                     //category: appData.categories[index],
-                    category: categories[index],
+                    category: categories[index].title,
 
 
                     //isSelected: appData.categories[index] == selectedCategory,
 
-                      isSelected: categories[index] == selectedCategory,
+                      isSelected: categories[index].title == selectedCategory,
 
 
                   );

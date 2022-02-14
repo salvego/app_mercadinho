@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app_mercadinho/src/api/product/api_get_category_list.dart';
+import '../category/api_get_category_list.dart';
 import 'package:app_mercadinho/src/api/product/api_get_product_list.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:app_mercadinho/src/helpers/message.dart';

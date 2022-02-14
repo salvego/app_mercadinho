@@ -9,5 +9,9 @@ class CartItemModel {
     required this.quantity,
   });
 
+  CartItemModel.fromJson(Map<String, dynamic> json)
+      : item = json['product'].cast<ItemModel>(),
+        quantity = json['quantity'];
+
   double totalPrice() => item.price * quantity;
 }
