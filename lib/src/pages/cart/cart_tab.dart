@@ -27,8 +27,9 @@ class _CartTabState extends State<CartTab> {
     getCartItemsList().then((value) {
 
       setState(() {
-        print(value);
+        
         cartItems = value;
+
       });
 
     });

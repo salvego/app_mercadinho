@@ -10,7 +10,7 @@ class CartItemModel {
   });
 
   CartItemModel.fromJson(Map<String, dynamic> json)
-      : item = json['product'].cast<ItemModel>(),
+      : item = ItemModel.fromJson(json['product']),
         quantity = json['quantity'];
 
   double totalPrice() => item.price * quantity;
