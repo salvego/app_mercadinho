@@ -1,3 +1,4 @@
+import 'package:app_mercadinho/src/config/app_data.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/models/cart_item_model.dart';
@@ -20,6 +21,8 @@ class CartTile extends StatefulWidget {
 
 class _CartTileState extends State<CartTile> {
   final UtilsServices utilsServices = UtilsServices();
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,6 @@ class _CartTileState extends State<CartTile> {
 
         // Total
         subtitle: Text(
-          
           utilsServices.priceToCurrency(widget.cartItem.totalPrice()),
           style: TextStyle(
             color: CustomColors.customSwatchColor,
@@ -66,6 +68,7 @@ class _CartTileState extends State<CartTile> {
                 // Remover item do carrinho
                 widget.remove(widget.cartItem);
               }
+
             });
           },
           isRemovable: true,

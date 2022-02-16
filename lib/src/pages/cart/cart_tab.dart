@@ -69,6 +69,7 @@ class _CartTabState extends State<CartTab> {
               itemBuilder: (_, index) {
                 return CartTile(
                   //cartItem: appData.cartItems[index],
+
                   cartItem: cartItems[index],
 
                   remove: removeItemFromCart,
