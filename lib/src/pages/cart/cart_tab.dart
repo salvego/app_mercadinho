@@ -17,7 +17,7 @@ class CartTab extends StatefulWidget {
 class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
 
-  List cartItems = [];
+  List<CartItemModel> cartItems = [];
 
   @override
   void initState() {
@@ -25,33 +25,28 @@ class _CartTabState extends State<CartTab> {
     super.initState();
 
     getCartItemsList().then((value) {
-
       setState(() {
-        
         cartItems = value;
-
       });
-
     });
-
   }
 
-
-
-  void removeItemFromCart(CartItemModel cartITem) {
+  void removeItemFromCart(CartItemModel cartItem) {
     setState(() {
-      appData.cartItems.remove(cartITem);
+      cartItems.remove(cartItem);
 
       utilsServices.showToast(
-          message: '${cartITem.item.title} removido(a) do carrinho');
+          message: '${cartItem.item.title} removido(a) do carrinho');
     });
   }
 
   double cartTotalPrice() {
     double total = 0;
 
-    for (var item in appData.cartItems) {
-      total += item.totalPrice();
+    for (var item in cartItems) {
+      setState(() {
+        total += item.totalPrice();
+      });
     }
 
     return total;

@@ -2,7 +2,7 @@ import 'package:app_mercadinho/src/models/cart_item_model.dart';
 import 'package:app_mercadinho/src/models/item_model.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-Future<List> getCartItemsList() async {
+Future<List<CartItemModel>> getCartItemsList() async {
 
   final ParseCloudFunction function = ParseCloudFunction('get-cart-items');
   final ParseResponse parseResponse = await function.execute();
