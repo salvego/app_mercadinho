@@ -8,11 +8,13 @@ import 'package:app_mercadinho/src/services/utils_services.dart';
 class CartTile extends StatefulWidget {
   final CartItemModel cartItem;
   final Function(CartItemModel) remove;
+  final Function() cartTotalPrice;
 
   const CartTile({
     Key? key,
     required this.cartItem,
     required this.remove,
+    required this.cartTotalPrice,
   }) : super(key: key);
 
   @override
@@ -21,8 +23,6 @@ class CartTile extends StatefulWidget {
 
 class _CartTileState extends State<CartTile> {
   final UtilsServices utilsServices = UtilsServices();
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +64,12 @@ class _CartTileState extends State<CartTile> {
             setState(() {
               widget.cartItem.quantity = quantity;
 
+              widget.cartTotalPrice();
+
               if (quantity == 0) {
                 // Remover item do carrinho
                 widget.remove(widget.cartItem);
               }
-
             });
           },
           isRemovable: true,

@@ -71,8 +71,8 @@ class _CartTabState extends State<CartTab> {
                   //cartItem: appData.cartItems[index],
 
                   cartItem: cartItems[index],
-
                   remove: removeItemFromCart,
+                  cartTotalPrice: cartTotalPrice,
                 );
               },
             ),
