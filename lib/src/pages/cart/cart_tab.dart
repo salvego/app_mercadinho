@@ -1,4 +1,5 @@
 import 'package:app_mercadinho/src/api/cart/api_get_cart_list.dart';
+import 'package:app_mercadinho/src/api/order/api_order_checkout.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/models/cart_item_model.dart';
@@ -129,9 +130,9 @@ class _CartTabState extends State<CartTab> {
                       ),
                     ),
                     onPressed: () async {
-                      bool? result = await showOrderConfirmation();
+                      String? result = await showOrderConfirmation();
 
-                      if (result ?? false) {
+                      if (result != "") {
                         showDialog(
                           context: context,
                           builder: (_) {
@@ -163,8 +164,8 @@ class _CartTabState extends State<CartTab> {
     );
   }
 
-  Future<bool?> showOrderConfirmation() {
-    return showDialog<bool>(
+  Future<String?> showOrderConfirmation() {
+    return showDialog<String>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -176,7 +177,7 @@ class _CartTabState extends State<CartTab> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(false);
+                Navigator.of(context).pop("");
               },
               child: const Text('Não'),
             ),
@@ -187,7 +188,16 @@ class _CartTabState extends State<CartTab> {
                 ),
               ),
               onPressed: () {
-                Navigator.of(context).pop(true);
+
+                String numberOrder = "";
+
+                print("Entrei aqui Checkout");
+
+                orderCheckout(cartTotalPrice()).then((value) {
+                  numberOrder = value;
+                });
+
+                Navigator.of(context).pop(numberOrder);
               },
               child: const Text('Sim'),
             ),
