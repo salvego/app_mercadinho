@@ -82,14 +82,17 @@ List<String> categories = [
 
 List<CartItemModel> cartItems = [
   CartItemModel(
+    id: '1',
     item: apple,
     quantity: 4,
   ),
   CartItemModel(
+    id: '2',
     item: mango,
     quantity: 2,
   ),
   CartItemModel(
+    id: '3',
     item: guava,
     quantity: 1,
   ),
@@ -118,10 +121,12 @@ List<OrderModel> orders = [
     total: 11.0,
     items: [
       CartItemModel(
+        id: '1',
         item: apple,
         quantity: 2,
       ),
       CartItemModel(
+        id: '2',
         item: mango,
         quantity: 2,
       ),
@@ -142,6 +147,7 @@ List<OrderModel> orders = [
     total: 11.5,
     items: [
       CartItemModel(
+        id: '3',
         item: guava,
         quantity: 1,
       ),

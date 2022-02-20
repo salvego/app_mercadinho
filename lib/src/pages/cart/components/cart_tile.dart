@@ -1,3 +1,4 @@
+import 'package:app_mercadinho/src/api/cart/api_modify_item_quantity.dart';
 import 'package:app_mercadinho/src/config/app_data.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
@@ -64,11 +65,25 @@ class _CartTileState extends State<CartTile> {
             setState(() {
               widget.cartItem.quantity = quantity;
 
+              // ATUALIZA O TOTAL DO PEDIDO NA TELA
               widget.cartTotalPrice();
 
               if (quantity == 0) {
+                // MODIFICA A QUANTIDADE DO ITEM NO CARRINHO NO BACK4APP (BANCO DE DADOS)
+                modifyQuantityItemCartList(
+                  widget.cartItem.id,
+                  widget.cartItem.quantity,
+                  context,
+                );
                 // Remover item do carrinho
                 widget.remove(widget.cartItem);
+              }else{
+                // MODIFICA A QUANTIDADE DO ITEM NO CARRINHO NO BACK4APP (BANCO DE DADOS)
+                modifyQuantityItemCartList(
+                  widget.cartItem.id,
+                  widget.cartItem.quantity,
+                  context,
+                );
               }
             });
           },

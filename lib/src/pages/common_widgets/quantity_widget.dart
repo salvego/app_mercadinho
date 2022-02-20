@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 
 class QuantityWidget extends StatelessWidget {
-  final int value;
+  final double value;
   final String suffixText;
-  final Function(int quantity) result;
+  final Function(double quantity) result;
   final bool isRemovable;
 
   const QuantityWidget({
@@ -41,7 +41,7 @@ class QuantityWidget extends StatelessWidget {
             onPressed: () {
               if (value == 1 && !isRemovable) return;
 
-              int resultCount = value - 1;
+              double resultCount = value - 1;
               result(resultCount);
             },
           ),
@@ -59,7 +59,7 @@ class QuantityWidget extends StatelessWidget {
             icon: Icons.add,
             color: CustomColors.customSwatchColor,
             onPressed: () {
-              int resultCount = value + 1;
+              double resultCount = value + 1;
 
               result(resultCount);
             },

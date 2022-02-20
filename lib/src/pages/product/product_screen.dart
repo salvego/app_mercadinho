@@ -19,7 +19,7 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   final UtilsServices utilsServices = UtilsServices();
 
-  int cartItemQuantity = 1;
+  double cartItemQuantity = 1;
 
   @override
   Widget build(BuildContext context) {

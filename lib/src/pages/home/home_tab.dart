@@ -32,11 +32,11 @@ class _HomeTabState extends State<HomeTab> {
 
       getCategoryList().then((value) {
 
-        setState(() {
-          categories = value;
-        });
-
+      setState(() {
+        categories = value;
       });
+
+    });
 
       getProductList(categoryId: 'HH7vSREpsb').then((value) {
 
