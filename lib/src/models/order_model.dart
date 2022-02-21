@@ -4,7 +4,7 @@ class OrderModel {
   String id;
   DateTime createdDateTime;
   DateTime overdueDateTime;
-  CartItemModel items;
+  List<CartItemModel> items;
   String status;
   String copyAndPaste;
   double total;
@@ -23,7 +23,7 @@ class OrderModel {
       : id = json['id'],
         createdDateTime = json['createdDateTime'],
         overdueDateTime = json['overdueDateTime'],
-        items = CartItemModel.fromJson(json['items']),
+        items =  List<CartItemModel>.from(json['items']),
         status = json['status'],
         copyAndPaste = json['copyAndPaste'],
         total = json['total'].toDouble();

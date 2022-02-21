@@ -119,13 +119,13 @@ List<OrderModel> orders = [
     id: 'asd6a54da6s2d1',
     status: 'pending_payment',
     total: 11.0,
-    items:
+    items: [
       CartItemModel(
         id: '1',
         item: apple,
         quantity: 2,
       ),
-
+    ],
   ),
 
   // Pedido 02
@@ -140,12 +140,12 @@ List<OrderModel> orders = [
     id: 'a65s4d6a2s1d6a5s',
     status: 'delivered',
     total: 11.5,
-    items:
+    items: [
       CartItemModel(
         id: '3',
         item: guava,
         quantity: 1,
       ),
-
+    ],
   ),
 ];
