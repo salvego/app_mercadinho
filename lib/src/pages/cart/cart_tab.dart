@@ -130,6 +130,7 @@ class _CartTabState extends State<CartTab> {
                       ),
                     ),
                     onPressed: () async {
+                      //RETORNO DO ID DO PEDIDO
                       String? result = await showOrderConfirmation();
 
                       if (result != "") {
@@ -187,16 +188,11 @@ class _CartTabState extends State<CartTab> {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async{
 
+                //GERA UM NOVO PEDIDO
                 String numberOrder = "";
-
-                print("Entrei aqui Checkout");
-
-                orderCheckout(cartTotalPrice()).then((value) {
-                  numberOrder = value;
-                });
-
+                numberOrder = await orderCheckout(cartTotalPrice());
                 Navigator.of(context).pop(numberOrder);
               },
               child: const Text('Sim'),
