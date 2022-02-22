@@ -1,4 +1,4 @@
-
+import 'package:app_mercadinho/src/api/order/api_get_order_items_list.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/models/cart_item_model.dart';
 import 'package:app_mercadinho/src/models/order_model.dart';
@@ -6,13 +6,32 @@ import 'package:app_mercadinho/src/pages/common_widgets/payment_dialog.dart';
 import 'package:app_mercadinho/src/pages/orders/components/order_status_widget.dart';
 import 'package:app_mercadinho/src/services/utils_services.dart';
 
-class OrderTile extends StatelessWidget {
+class OrderTile extends StatefulWidget {
   final OrderModel order;
 
   OrderTile({
     Key? key,
     required this.order,
   }) : super(key: key);
+
+  @override
+  State<OrderTile> createState() => _OrderTileState();
+}
+
+class _OrderTileState extends State<OrderTile> {
+  List<OrderModel> ordems = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getOrderItemsList(widget.order.id).then((value) {
+      setState(() {
+        ordems = value;
+      });
+    });
+  }
 
   final UtilsServices utilsServices = UtilsServices();
 
@@ -25,14 +44,14 @@ class OrderTile extends StatelessWidget {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-          initiallyExpanded: order.status == 'pending_payment',
+          initiallyExpanded: widget.order.status == 'pending_payment',
           title: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Pedido: ${order.id}'),
+              Text('Pedido: ${widget.order.id}'),
               Text(
-                utilsServices.formatDateTime(order.createdDateTime),
+                utilsServices.formatDateTime(widget.order.createdDateTime),
                 style: const TextStyle(
                   fontSize: 12,
                   color: Colors.black,
@@ -47,17 +66,33 @@ class OrderTile extends StatelessWidget {
               child: Row(
                 children: [
                   // Lista de produtos
+                  // Expanded(
+                  //   flex: 3,
+                  //   child: SizedBox(
+                  //     height: 150,
+                  //     child: ListView(
+                  //       children: order.items.map((orderItem) {
+                  //         return _OrderItemWidget(
+                  //           utilsServices: utilsServices,
+                  //           orderItem: orderItem,
+                  //         );
+                  //       }).toList(),
+                  //     ),
+                  //   ),
+                  // ),
+
                   Expanded(
                     flex: 3,
                     child: SizedBox(
                       height: 150,
-                      child: ListView(
-                        children: order.items.map((orderItem) {
+                      child: ListView.builder(
+                        itemCount: ordems.length,
+                        itemBuilder: (_, index) {
                           return _OrderItemWidget(
                             utilsServices: utilsServices,
-                            orderItem: orderItem,
+                            orderItem: ordems[index].items.toList(),
                           );
-                        }).toList(),
+                        },
                       ),
                     ),
                   ),
@@ -73,8 +108,9 @@ class OrderTile extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: OrderStatusWidget(
-                      status: order.status,
-                      isOverdue: order.overdueDateTime.isBefore(DateTime.now()),
+                      status: widget.order.status,
+                      isOverdue:
+                          widget.order.overdueDateTime.isBefore(DateTime.now()),
                     ),
                   ),
                 ],
@@ -95,7 +131,7 @@ class OrderTile extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: utilsServices.priceToCurrency(order.total),
+                    text: utilsServices.priceToCurrency(widget.order.total),
                   ),
                 ],
               ),
@@ -103,7 +139,7 @@ class OrderTile extends StatelessWidget {
 
             // Botão pagamento
             Visibility(
-              visible: order.status == 'pending_payment',
+              visible: widget.order.status == 'pending_payment',
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -115,7 +151,7 @@ class OrderTile extends StatelessWidget {
                     context: context,
                     builder: (_) {
                       return PaymentDialog(
-                        order: order,
+                        order: widget.order,
                       );
                     },
                   );
