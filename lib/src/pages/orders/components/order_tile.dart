@@ -7,10 +7,12 @@ import 'package:app_mercadinho/src/pages/orders/components/order_status_widget.d
 import 'package:app_mercadinho/src/services/utils_services.dart';
 
 class OrderTile extends StatefulWidget {
+  final String orderId;
   final OrderModel order;
 
   OrderTile({
     Key? key,
+    required this.orderId,
     required this.order,
   }) : super(key: key);
 
@@ -19,16 +21,16 @@ class OrderTile extends StatefulWidget {
 }
 
 class _OrderTileState extends State<OrderTile> {
-  List<OrderModel> ordems = [];
+  List<CartItemModel> cartItems = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    getOrderItemsList(widget.order.id).then((value) {
+    getOrderItemsList(widget.orderId).then((value) {
       setState(() {
-        ordems = value;
+        cartItems = value;
       });
     });
   }
@@ -44,7 +46,7 @@ class _OrderTileState extends State<OrderTile> {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-          initiallyExpanded: widget.order.status == 'pending_payment',
+          initiallyExpanded: widget.order.statusOrder == 'pending_payment',
           title: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,11 +88,11 @@ class _OrderTileState extends State<OrderTile> {
                     child: SizedBox(
                       height: 150,
                       child: ListView.builder(
-                        itemCount: ordems.length,
+                        itemCount: cartItems.length,
                         itemBuilder: (_, index) {
                           return _OrderItemWidget(
                             utilsServices: utilsServices,
-                            orderItem: ordems[index].items.toList(),
+                            orderItem: cartItems[index],
                           );
                         },
                       ),
@@ -108,7 +110,7 @@ class _OrderTileState extends State<OrderTile> {
                   Expanded(
                     flex: 2,
                     child: OrderStatusWidget(
-                      status: widget.order.status,
+                      status: widget.order.statusOrder,
                       isOverdue:
                           widget.order.overdueDateTime.isBefore(DateTime.now()),
                     ),
@@ -139,7 +141,7 @@ class _OrderTileState extends State<OrderTile> {
 
             // Botão pagamento
             Visibility(
-              visible: widget.order.status == 'pending_payment',
+              visible: widget.order.statusOrder == 'pending_payment',
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

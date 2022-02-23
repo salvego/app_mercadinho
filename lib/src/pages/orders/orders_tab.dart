@@ -37,7 +37,7 @@ class _OrdersTabState extends State<OrdersTab> {
         physics: const BouncingScrollPhysics(),
         separatorBuilder: (_, index) => const SizedBox(height: 10),
         //itemBuilder: (_, index) => OrderTile(order: appData.orders[index]),
-        itemBuilder: (_, index) => OrderTile(order: orders[index].id),
+        itemBuilder: (_, index) => OrderTile(orderId: orders[index].id, order: orders[index],),
         //itemCount: appData.orders.length,
         itemCount: orders.length,
       ),

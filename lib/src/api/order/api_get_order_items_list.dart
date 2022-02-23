@@ -1,7 +1,7 @@
-import 'package:app_mercadinho/src/models/order_model.dart';
+import 'package:app_mercadinho/src/models/cart_item_model.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-Future<List<OrderModel>> getOrderItemsList(String orderId) async {
+Future<List<CartItemModel>> getOrderItemsList(String orderId) async {
 
   final ParseCloudFunction function = ParseCloudFunction('get-order-items');
   final Map<String, dynamic> params = <String, dynamic>{
@@ -14,7 +14,7 @@ Future<List<OrderModel>> getOrderItemsList(String orderId) async {
   if (parseResponse.success) {
     if (parseResponse.result != null) {
 
-      return List<OrderModel>.from(parseResponse.result.map((e) => OrderModel.fromJson(e)));
+      return List<CartItemModel>.from(parseResponse.result.map((e) => CartItemModel.fromJson(e)));
 
     }
   }
