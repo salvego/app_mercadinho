@@ -43,7 +43,7 @@ class PaymentDialog extends StatelessWidget {
 
                 // QR Code
                 QrImage(
-                  data: "asd654as65da4s6d5a4s6d54",
+                  data: order.id,
                   version: QrVersions.auto,
                   size: 200.0,
                 ),

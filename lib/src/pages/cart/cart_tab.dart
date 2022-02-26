@@ -130,23 +130,35 @@ class _CartTabState extends State<CartTab> {
                       ),
                     ),
                     onPressed: () async {
-                      //RETORNO DO ID DO PEDIDO
-                      String? result = await showOrderConfirmation();
 
-                      if (result != "") {
-                        showDialog(
-                          context: context,
-                          builder: (_) {
-                            return PaymentDialog(
-                              order: appData.orders.first,
-                            );
-                          },
-                        );
-                      } else {
+                      if(cartTotalPrice() > 0) {
+
+                        //RETORNO DO ID DO PEDIDO
+                        String? result = await showOrderConfirmation();
+
+                        if (result != "") {
+                          showDialog(
+                            context: context,
+                            builder: (_) {
+                              return PaymentDialog(
+                                order: appData.orders.first,
+                              );
+                            },
+                          );
+                        } else {
+                          utilsServices.showToast(
+                            message: 'Pedido não confirmado',
+                            isError: true,
+                          );
+                        }
+
+                      }else {
+
                         utilsServices.showToast(
-                          message: 'Pedido não confirmado',
+                          message: 'Insira ao menos um item no carrinho!',
                           isError: true,
                         );
+
                       }
                     },
                     child: const Text(
