@@ -1,3 +1,4 @@
+import 'package:app_mercadinho/src/api/cart/api_new_item_cart_list.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/models/item_model.dart';
@@ -114,7 +115,17 @@ class _ProductScreenState extends State<ProductScreen> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+
+                            // ADD ITEM NO CARRINHO
+                            newItemCartList(
+                              cartItemQuantity,
+                              widget.item.id,
+                              context,
+                            );
+                            //VOLTA PARA A TELA HOME
+                            Navigator.of(context).pop();
+                          },
                           label: const Text(
                             'Add no carrinho',
                             style: TextStyle(
