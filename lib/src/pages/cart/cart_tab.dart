@@ -1,4 +1,5 @@
 import 'package:app_mercadinho/src/api/cart/api_get_cart_list.dart';
+import 'package:app_mercadinho/src/api/order/api_get_order_items_list.dart';
 import 'package:app_mercadinho/src/api/order/api_order_checkout.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
@@ -141,7 +142,8 @@ class _CartTabState extends State<CartTab> {
                             context: context,
                             builder: (_) {
                               return PaymentDialog(
-                                order: appData.orders.first,
+                                //order: appData.orders.first,
+                                order: getOrderItemsList(result!).then((value) { value;})
                               );
                             },
                           );
