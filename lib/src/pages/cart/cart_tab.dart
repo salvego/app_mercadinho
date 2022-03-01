@@ -2,6 +2,7 @@ import 'package:app_mercadinho/src/api/cart/api_get_cart_list.dart';
 import 'package:app_mercadinho/src/api/order/api_get_order_id_list.dart';
 import 'package:app_mercadinho/src/api/order/api_order_checkout.dart';
 import 'package:app_mercadinho/src/models/order_model.dart';
+import 'package:app_mercadinho/src/pages/orders/components/get_order_id_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/models/cart_item_model.dart';
@@ -144,7 +145,7 @@ class _CartTabState extends State<CartTab> {
                             builder: (_) {
                               return PaymentDialog(
                                 //order: appData.orders.first,
-                                order: getOrderID(result!)[0],
+                                order: GetOrderId(orderId: result!),
                               );
                             },
                           );
@@ -217,18 +218,6 @@ class _CartTabState extends State<CartTab> {
       },
     );
   }
-
-
-  List<OrderModel> getOrderID(String orderID) {
-
-    List<OrderModel> order = [];
-
-    getOrderIDList(orderID).then((value) {order = value;});
-
-    return order;
-
-  }
-
 
 
 }

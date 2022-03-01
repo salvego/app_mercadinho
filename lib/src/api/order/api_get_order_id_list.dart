@@ -1,11 +1,11 @@
 import 'package:app_mercadinho/src/models/order_model.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-Future<List<OrderModel>> getOrderIDList(String orderId) async {
+Future<List<OrderModel>> getOrderIdList(String id) async {
 
   final ParseCloudFunction function = ParseCloudFunction('get-order-id');
   final Map<String, dynamic> params = <String, dynamic>{
-    'orderId': orderId,
+    'orderId': id,
   };
 
   final ParseResponse parseResponse =
