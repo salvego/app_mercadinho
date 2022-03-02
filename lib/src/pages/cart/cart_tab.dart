@@ -132,7 +132,7 @@ class _CartTabState extends State<CartTab> {
                         borderRadius: BorderRadius.circular(18),
                       ),
                     ),
-                    onPressed: () async {
+                    onPressed: () async{
 
                       if(cartTotalPrice() > 0) {
 
@@ -140,12 +140,14 @@ class _CartTabState extends State<CartTab> {
                         String? result = await showOrderConfirmation();
 
                         if (result != "") {
-                          showDialog(
+                          
+                            showDialog(
                             context: context,
                             builder: (_) {
                               return GetOrderId(orderId: result!);
                             },
                           );
+                            
                         } else {
                           utilsServices.showToast(
                             message: 'Pedido não confirmado',
@@ -161,6 +163,7 @@ class _CartTabState extends State<CartTab> {
                         );
 
                       }
+                        
                     },
                     child: const Text(
                       'Concluir pedido',
