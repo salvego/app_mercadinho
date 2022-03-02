@@ -143,10 +143,7 @@ class _CartTabState extends State<CartTab> {
                           showDialog(
                             context: context,
                             builder: (_) {
-                              return PaymentDialog(
-                                //order: appData.orders.first,
-                                order: GetOrderId(orderId: result!),
-                              );
+                              return GetOrderId(orderId: result!);
                             },
                           );
                         } else {

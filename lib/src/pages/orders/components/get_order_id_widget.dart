@@ -8,6 +8,7 @@ class GetOrderId extends StatefulWidget {
 
   final String orderId;
 
+
   GetOrderId({
     Key? key,
     required this.orderId,
@@ -20,7 +21,7 @@ class GetOrderId extends StatefulWidget {
 
 class _GetOrderIdState extends State<GetOrderId> {
 
-  List<OrderModel> orders = [];
+  OrderModel? order;
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _GetOrderIdState extends State<GetOrderId> {
 
     getOrderIdList(widget.orderId).then((value) {
       setState(() {
-        orders = value;
+        order = value[0];
       });
     });
   }
@@ -37,11 +38,6 @@ class _GetOrderIdState extends State<GetOrderId> {
 
   @override
   Widget build(BuildContext context) {
-    return PaymentDialog(
-                        order: orders[0],
-                      );
+    return order != null ? PaymentDialog(order: order!) : Container();
   }
-
-
-
 }
