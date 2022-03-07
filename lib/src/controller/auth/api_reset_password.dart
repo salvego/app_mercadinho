@@ -37,11 +37,11 @@ Future<bool?> resetPassword(BuildContext context) {
                   ),
 
                   // E-mail
-                  CustomTextField(
-                    controller: emailController,
-                    icon: Icons.lock,
-                    label: 'E-mail',
-                  ),
+//                  CustomTextField(
+//                    onChanged: emailController,
+//                    prefix: const Icon(Icons.lock),
+//                    hint: 'E-mail',
+//                  ),
 
                   // Botão de confirmação
                   SizedBox(

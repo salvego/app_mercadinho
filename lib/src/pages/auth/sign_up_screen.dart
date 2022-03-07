@@ -1,4 +1,4 @@
-import 'package:app_mercadinho/src/api/auth/api_new_user.dart';
+import '../../controller/auth/api_new_user.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
@@ -64,34 +64,34 @@ class SignUpScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        CustomTextField(
-                          controller: emailController,
-                          icon: Icons.email,
-                          label: 'Email',
-                        ),
-                        CustomTextField(
-                          controller: passController,
-                          icon: Icons.lock,
-                          label: 'Senha',
-                          isSecret: true,
-                        ),
-                        CustomTextField(
-                          controller: nameController,
-                          icon: Icons.person,
-                          label: 'Nome',
-                        ),
-                        CustomTextField(
-                          controller: phoneController,
-                          icon: Icons.phone,
-                          label: 'Celular',
-                          inputFormatters: [phoneFormatter],
-                        ),
-                        CustomTextField(
-                          controller: cpfController,
-                          icon: Icons.file_copy,
-                          label: 'CPF',
-                          inputFormatters: [cpfFormatter],
-                        ),
+//                        CustomTextField(
+//                          controller: emailController,
+//                          icon: Icons.email,
+//                          label: 'Email',
+//                        ),
+//                        CustomTextField(
+//                          controller: passController,
+//                          icon: Icons.lock,
+//                          label: 'Senha',
+//                          isSecret: true,
+//                        ),
+//                        CustomTextField(
+//                          controller: nameController,
+//                          icon: Icons.person,
+//                          label: 'Nome',
+//                        ),
+//                        CustomTextField(
+//                          controller: phoneController,
+//                          icon: Icons.phone,
+//                          label: 'Celular',
+//                          inputFormatters: [phoneFormatter],
+//                        ),
+//                        CustomTextField(
+//                          controller: cpfController,
+//                          icon: Icons.file_copy,
+//                          label: 'CPF',
+//                          inputFormatters: [cpfFormatter],
+//                        ),
                         SizedBox(
                           height: 50,
                           child: ElevatedButton(

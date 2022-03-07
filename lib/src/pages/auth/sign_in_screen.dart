@@ -1,20 +1,41 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:app_mercadinho/src/api/auth/api_reset_password.dart';
+import 'package:app_mercadinho/src/controller/auth/api_reset_password.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
+import 'package:app_mercadinho/src/pages/base/base_screen.dart';
+import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
+import 'package:app_mercadinho/src/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/auth/sign_up_screen.dart';
-import 'package:app_mercadinho/src/api/auth/api_login.dart';
+import 'package:app_mercadinho/src/controller/auth/login_controller.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   SignInScreen({Key? key}) : super(key: key);
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
 
+class _SignInScreenState extends State<SignInScreen> {
+  final LoginController controller = LoginController();
 
-  
+  @override
+  void initState() {
+    // ignore: todo
+    // TODO: implement initState
+    super.initState();
 
+    when((_) => controller.loggedIn, (){
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const BaseScreen()),
+      );
+
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,50 +116,58 @@ class SignInScreen extends StatelessWidget {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+                  children: <Widget>[
                     // Email
-                    TextFormField(
-                      controller: emailController,
-                      decoration: const InputDecoration(hintText: 'E-mail'),
-                      keyboardType: TextInputType.emailAddress,
-                      autocorrect: false,
-                    ),
+                    Observer(builder: (_){
+                      return CustomTextField(
+                        hint: 'E-mail',
+                        prefix: const Icon(Icons.account_circle),
+                        textInputType: TextInputType.emailAddress,
+                        onChanged: controller.setEmail,
+                        enabled: !controller.loading,
+                      );
+                    }),
 
                     // Senha
-                    TextFormField(
-                      controller: passController,
-                      decoration: const InputDecoration(hintText: 'Password'),
-                      autocorrect: false,
-                      obscureText: true,
-                    ),
+                    Observer(builder: (_){
+                      return CustomTextField(
+                        hint: 'Senha',
+                        prefix: const Icon(Icons.lock),
+                        obscure: !controller.passwordVisible,
+                        onChanged: controller.setPassword,
+                        enabled: !controller.loading,
+                        suffix: CustomIconButton(
+                          radius: 32,
+                          iconData: controller.passwordVisible ? Icons.visibility_off : Icons.visibility,
+                          onTap: controller.togglePasswordVisible,
+                        ),
+                      );
+                    }),
 
                     // Botão de entrar
                     SizedBox(
                       height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                        ),
-                        onPressed: () {
-                          if (goUser.isLoggedIn == true) {
-
-                          } else {
-
-                            userLogin(
-                                emailController.text,
-                                passController.text,
-                                context);
-                          }
-                        },
-                        child: const Text(
-                          'Entrar',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
+                      child: Observer(builder: (_){
+                        return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                            ),
+                            onPressed: controller.isFormValid ? () {
+                              controller.userLogin(context);
+                            } : null,
+                            child: controller.loading
+                                ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation(Colors.white),
+                              ),
+                            )
+                                : const Text('Entrar'),
+                          );
+                      }) ,
                     ),
 
                     // Esqueceu a senha

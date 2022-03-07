@@ -1,4 +1,4 @@
-import 'package:app_mercadinho/src/api/cart/api_modify_item_quantity.dart';
+import '../../../controller/cart/api_modify_item_quantity.dart';
 import 'package:app_mercadinho/src/config/app_data.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';

@@ -1,6 +1,6 @@
-import 'package:app_mercadinho/src/api/cart/api_get_cart_list.dart';
-import 'package:app_mercadinho/src/api/order/api_get_order_id_list.dart';
-import 'package:app_mercadinho/src/api/order/api_order_checkout.dart';
+import '../../controller/cart/api_get_cart_list.dart';
+import '../../controller/order/api_get_order_id_list.dart';
+import '../../controller/order/api_order_checkout.dart';
 import 'package:app_mercadinho/src/models/order_model.dart';
 import 'package:app_mercadinho/src/pages/orders/components/get_order_id_widget.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
-import 'package:app_mercadinho/src/api/auth/api_change_password.dart';
-import 'package:app_mercadinho/src/api/auth/api_logout.dart';
+import '../../controller/auth/api_change_password.dart';
+import '../../controller/auth/api_logout.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
@@ -34,37 +34,37 @@ class _ProfileTabState extends State<ProfileTab> {
         padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
         children: [
           // Email
-          CustomTextField(
-            readOnly: true,
-            initialValue: goUser.email,
-            icon: Icons.email,
-            label: 'Email',
-          ),
-
-          // Nome
-          CustomTextField(
-            readOnly: true,
-            initialValue: goUser.usuario,
-            icon: Icons.person,
-            label: 'Nome',
-          ),
-
-          // Celular
-          CustomTextField(
-            readOnly: true,
-            initialValue: goUser.phone,
-            icon: Icons.phone,
-            label: 'Celular',
-          ),
-
-          // CPF
-          CustomTextField(
-            readOnly: true,
-            initialValue: goUser.cpf,
-            icon: Icons.file_copy,
-            label: 'CPF',
-            isSecret: true,
-          ),
+//          CustomTextField(
+//            readOnly: true,
+//            initialValue: goUser.email,
+//            icon: Icons.email,
+//            label: 'Email',
+//          ),
+//
+//          // Nome
+//          CustomTextField(
+//            readOnly: true,
+//            initialValue: goUser.usuario,
+//            icon: Icons.person,
+//            label: 'Nome',
+//          ),
+//
+//          // Celular
+//          CustomTextField(
+//            readOnly: true,
+//            initialValue: goUser.phone,
+//            icon: Icons.phone,
+//            label: 'Celular',
+//          ),
+//
+//          // CPF
+//          CustomTextField(
+//            readOnly: true,
+//            initialValue: goUser.cpf,
+//            icon: Icons.file_copy,
+//            label: 'CPF',
+//            isSecret: true,
+//          ),
 
           // Botão para atualizar a senha
           SizedBox(
@@ -125,27 +125,27 @@ class _ProfileTabState extends State<ProfileTab> {
                     ),
 
                     // E-mail
-                     CustomTextField(
-                      controller: emailController,
-                      icon: Icons.lock,
-                      label: 'E-mail',
-                    ),
-
-                    // Senha Atual
-                     CustomTextField(
-                      controller: currentPassController,
-                      isSecret: true,
-                      icon: Icons.lock_outline,
-                      label: 'Senha Atual',
-                    ),
-
-                    // Nova senha
-                     CustomTextField(
-                      controller: newPassController,
-                      isSecret: true,
-                      icon: Icons.lock_outline,
-                      label: 'Nova senha',
-                    ),
+//                     CustomTextField(
+//                      controller: emailController,
+//                      icon: Icons.lock,
+//                      label: 'E-mail',
+//                    ),
+//
+//                    // Senha Atual
+//                     CustomTextField(
+//                      controller: currentPassController,
+//                      isSecret: true,
+//                      icon: Icons.lock_outline,
+//                      label: 'Senha Atual',
+//                    ),
+//
+//                    // Nova senha
+//                     CustomTextField(
+//                      controller: newPassController,
+//                      isSecret: true,
+//                      icon: Icons.lock_outline,
+//                      label: 'Nova senha',
+//                    ),
 
                     // Botão de confirmação
                     SizedBox(

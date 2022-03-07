@@ -1,4 +1,4 @@
-import 'package:app_mercadinho/src/api/auth/api_login.dart';
+import 'package:app_mercadinho/src/controller/auth/login_controller.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:app_mercadinho/src/helpers/message.dart';
 import 'package:flutter/material.dart';
