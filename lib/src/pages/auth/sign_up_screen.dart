@@ -1,4 +1,5 @@
-import '../../controller/auth/api_new_user.dart';
+import 'package:app_mercadinho/src/controller/auth/new_user_controller.dart';
+import 'package:app_mercadinho/src/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
@@ -7,11 +8,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController cpfController = TextEditingController();
+  final NewUserController controller = NewUserController();
 
   final cpfFormatter = MaskTextInputFormatter(
     mask: '###.###.###-##',
@@ -64,34 +61,47 @@ class SignUpScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-//                        CustomTextField(
-//                          controller: emailController,
-//                          icon: Icons.email,
-//                          label: 'Email',
-//                        ),
-//                        CustomTextField(
-//                          controller: passController,
-//                          icon: Icons.lock,
-//                          label: 'Senha',
-//                          isSecret: true,
-//                        ),
-//                        CustomTextField(
-//                          controller: nameController,
-//                          icon: Icons.person,
-//                          label: 'Nome',
-//                        ),
-//                        CustomTextField(
-//                          controller: phoneController,
-//                          icon: Icons.phone,
-//                          label: 'Celular',
-//                          inputFormatters: [phoneFormatter],
-//                        ),
-//                        CustomTextField(
-//                          controller: cpfController,
-//                          icon: Icons.file_copy,
-//                          label: 'CPF',
-//                          inputFormatters: [cpfFormatter],
-//                        ),
+                        CustomTextField(
+                          prefix: const Icon(Icons.email),
+                          hint: 'Email',
+                          textInputType: TextInputType.emailAddress,
+                          onChanged: controller.setEmail,
+                          enabled: !controller.loading,
+                        ),
+                        CustomTextField(
+                          hint: 'Senha',
+                          prefix: const Icon(Icons.lock),
+                          obscure: !controller.passwordVisible,
+                          onChanged: controller.setPassword,
+                          enabled: !controller.loading,
+                          suffix: CustomIconButton(
+                            radius: 32,
+                            iconData: controller.passwordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            onTap: controller.togglePasswordVisible,
+                          ),
+                        ),
+                        CustomTextField(
+                          onChanged: controller.setFullName,
+                          prefix: const Icon(Icons.person),
+                          hint: 'Nome',
+                          enabled: !controller.loading,
+                        ),
+                        CustomTextField(
+                          onChanged: controller.setPhone,
+                          prefix: const Icon(Icons.phone),
+                          hint: 'Celular',
+                          inputFormatters: [phoneFormatter],
+                          enabled: !controller.loading,
+                        ),
+                        CustomTextField(
+                          onChanged: controller.setCPF,
+                          prefix: const Icon(Icons.file_copy),
+                          hint: 'CPF',
+                          inputFormatters: [cpfFormatter],
+                          enabled: !controller.loading,
+                        ),
                         SizedBox(
                           height: 50,
                           child: ElevatedButton(
@@ -101,14 +111,8 @@ class SignUpScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              newUser(
-                                  emailController.text,
-                                  passController.text,
-                                  nameController.text,
-                                  phoneController.text,
-                                  cpfController.text,
-                                  context,
-                              );
+                              //CADASTRA NOVO USUÁRIO
+                              controller.newUser(context);
                             },
                             child: const Text(
                               'Cadastrar usuário',
