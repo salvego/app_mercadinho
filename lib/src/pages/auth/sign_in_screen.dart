@@ -1,6 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:app_mercadinho/src/controller/auth/api_reset_password.dart';
-import 'package:app_mercadinho/src/config/globals.dart';
+import 'package:app_mercadinho/src/pages/auth/components/reset_password_tile.dart';
 import 'package:app_mercadinho/src/pages/base/base_screen.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
 import 'package:app_mercadinho/src/widgets/custom_icon_button.dart';
@@ -27,14 +26,11 @@ class _SignInScreenState extends State<SignInScreen> {
     // TODO: implement initState
     super.initState();
 
-    when((_) => controller.loggedIn, (){
-
+    when((_) => controller.loggedIn, () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const BaseScreen()),
       );
-
     });
-
   }
 
   @override
@@ -118,7 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     // Email
-                    Observer(builder: (_){
+                    Observer(builder: (_) {
                       return CustomTextField(
                         hint: 'E-mail',
                         prefix: const Icon(Icons.account_circle),
@@ -129,7 +125,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     }),
 
                     // Senha
-                    Observer(builder: (_){
+                    Observer(builder: (_) {
                       return CustomTextField(
                         hint: 'Senha',
                         prefix: const Icon(Icons.lock),
@@ -138,7 +134,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         enabled: !controller.loading,
                         suffix: CustomIconButton(
                           radius: 32,
-                          iconData: controller.passwordVisible ? Icons.visibility_off : Icons.visibility,
+                          iconData: controller.passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           onTap: controller.togglePasswordVisible,
                         ),
                       );
@@ -147,27 +145,30 @@ class _SignInScreenState extends State<SignInScreen> {
                     // Botão de entrar
                     SizedBox(
                       height: 50,
-                      child: Observer(builder: (_){
+                      child: Observer(builder: (_) {
                         return ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
-                              ),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
                             ),
-                            onPressed: controller.isFormValid ? () {
-                              controller.userLogin(context);
-                            } : null,
-                            child: controller.loading
-                                ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation(Colors.white),
-                              ),
-                            )
-                                : const Text('Entrar'),
-                          );
-                      }) ,
+                          ),
+                          onPressed: controller.isFormValid
+                              ? () {
+                                  controller.userLogin(context);
+                                }
+                              : null,
+                          child: controller.loading
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    valueColor:
+                                        AlwaysStoppedAnimation(Colors.white),
+                                  ),
+                                )
+                              : const Text('Entrar'),
+                        );
+                      }),
                     ),
 
                     // Esqueceu a senha
@@ -176,7 +177,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: TextButton(
                         onPressed: () {
                           resetPassword(
-                              context,
+                            context,
                           );
                         },
                         child: Text(

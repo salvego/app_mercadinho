@@ -3,6 +3,7 @@ import 'package:app_mercadinho/src/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -61,47 +62,57 @@ class SignUpScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        CustomTextField(
-                          prefix: const Icon(Icons.email),
-                          hint: 'Email',
-                          textInputType: TextInputType.emailAddress,
-                          onChanged: controller.setEmail,
-                          enabled: !controller.loading,
-                        ),
-                        CustomTextField(
-                          hint: 'Senha',
-                          prefix: const Icon(Icons.lock),
-                          obscure: !controller.passwordVisible,
-                          onChanged: controller.setPassword,
-                          enabled: !controller.loading,
-                          suffix: CustomIconButton(
-                            radius: 32,
-                            iconData: controller.passwordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            onTap: controller.togglePasswordVisible,
-                          ),
-                        ),
-                        CustomTextField(
-                          onChanged: controller.setFullName,
-                          prefix: const Icon(Icons.person),
-                          hint: 'Nome',
-                          enabled: !controller.loading,
-                        ),
-                        CustomTextField(
-                          onChanged: controller.setPhone,
-                          prefix: const Icon(Icons.phone),
-                          hint: 'Celular',
-                          inputFormatters: [phoneFormatter],
-                          enabled: !controller.loading,
-                        ),
-                        CustomTextField(
-                          onChanged: controller.setCPF,
-                          prefix: const Icon(Icons.file_copy),
-                          hint: 'CPF',
-                          inputFormatters: [cpfFormatter],
-                          enabled: !controller.loading,
-                        ),
+                        Observer(builder: (_){
+                          return CustomTextField(
+                            prefix: const Icon(Icons.email),
+                            hint: 'Email',
+                            textInputType: TextInputType.emailAddress,
+                            onChanged: controller.setEmail,
+                            enabled: !controller.loading,
+                          );
+                        }),
+                        Observer(builder: (_){
+                          return CustomTextField(
+                            hint: 'Senha',
+                            prefix: const Icon(Icons.lock),
+                            obscure: !controller.passwordVisible,
+                            onChanged: controller.setPassword,
+                            enabled: !controller.loading,
+                            suffix: CustomIconButton(
+                              radius: 32,
+                              iconData: controller.passwordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              onTap: controller.togglePasswordVisible,
+                            ),
+                          );
+                        }),
+                        Observer(builder: (_){
+                          return CustomTextField(
+                            onChanged: controller.setFullName,
+                            prefix: const Icon(Icons.person),
+                            hint: 'Nome',
+                            enabled: !controller.loading,
+                          );
+                        }),
+                        Observer(builder: (_){
+                          return CustomTextField(
+                            onChanged: controller.setPhone,
+                            prefix: const Icon(Icons.phone),
+                            hint: 'Celular',
+                            inputFormatters: [phoneFormatter],
+                            enabled: !controller.loading,
+                          );
+                        }),
+                        Observer(builder: (_){
+                          return CustomTextField(
+                            onChanged: controller.setCPF,
+                            prefix: const Icon(Icons.file_copy),
+                            hint: 'CPF',
+                            inputFormatters: [cpfFormatter],
+                            enabled: !controller.loading,
+                          );
+                        }),
                         SizedBox(
                           height: 50,
                           child: ElevatedButton(

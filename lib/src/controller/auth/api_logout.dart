@@ -5,23 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 void userLogout(BuildContext context) async {
+  final ParseCloudFunction function = ParseCloudFunction('logout');
 
-    final ParseCloudFunction function = ParseCloudFunction('logout');
-    
-    final ParseResponse parseResponse =
-    await function.execute();
-   
+  final ParseResponse parseResponse = await function.execute();
 
-    if (parseResponse.success) {
+  if (parseResponse.success) {
+    goUser.isLoggedIn = false;
 
-      goUser.isLoggedIn = false;
-
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (c) {
-            return SignInScreen();
-          }));
-    } else {
-      showError(parseResponse.error!.message, context);
-    }
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (c) {
+      return SignInScreen();
+    }));
+  } else {
+    showError(parseResponse.error!.message, context);
   }
-
+}

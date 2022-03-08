@@ -1,12 +1,10 @@
-import 'package:app_mercadinho/src/helpers/message.dart';
+import 'package:app_mercadinho/src/controller/auth/reset_password_controller.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 Future<bool?> resetPassword(BuildContext context) {
-
-  final TextEditingController emailController = TextEditingController();
-
+  final ResetPasswordController controller = ResetPasswordController();
 
   return showDialog(
     context: context,
@@ -35,14 +33,16 @@ Future<bool?> resetPassword(BuildContext context) {
                       ),
                     ),
                   ),
-
-                  // E-mail
-//                  CustomTextField(
-//                    onChanged: emailController,
-//                    prefix: const Icon(Icons.lock),
-//                    hint: 'E-mail',
-//                  ),
-
+                  //E-mail
+                  Observer(builder: (_) {
+                    return CustomTextField(
+                      prefix: const Icon(Icons.lock),
+                      hint: 'Email',
+                      textInputType: TextInputType.emailAddress,
+                      onChanged: controller.setEmail,
+                      enabled: !controller.loading,
+                    );
+                  }),
                   // Botão de confirmação
                   SizedBox(
                     height: 45,
@@ -53,10 +53,7 @@ Future<bool?> resetPassword(BuildContext context) {
                         ),
                       ),
                       onPressed: () {
-
-                        sendResetPasssword(
-                            emailController.text,
-                            context);
+                        controller.sendResetPasssword(context);
                       },
                       child: const Text('Atualizar'),
                     ),
@@ -79,24 +76,4 @@ Future<bool?> resetPassword(BuildContext context) {
       );
     },
   );
-}
-
-void sendResetPasssword(String email, BuildContext context) async {
-
-  final ParseCloudFunction function = ParseCloudFunction('reset-password', autoSendSessionId: true);
-  final Map<String, dynamic> params = <String, dynamic>{
-    'email': email
-  };
-
-  final ParseResponse parseResponse =
-  await function.execute(parameters: params);
-
-  if (parseResponse.success) {
-    Navigator.of(context).pop();
-    showSuccess("User was successfully send e-mail!", context);
-
-  } else {
-    Navigator.of(context).pop();
-    showError(parseResponse.error!.message, context);
-  }
 }
