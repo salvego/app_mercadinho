@@ -1,15 +1,12 @@
-import '../../controller/cart/api_get_cart_list.dart';
-import '../../controller/order/api_get_order_id_list.dart';
+import 'package:app_mercadinho/src/controller/cart/get_cart_list_controller.dart';
+import 'package:mobx/mobx.dart';
 import '../../controller/order/api_order_checkout.dart';
-import 'package:app_mercadinho/src/models/order_model.dart';
 import 'package:app_mercadinho/src/pages/orders/components/get_order_id_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/models/cart_item_model.dart';
 import 'package:app_mercadinho/src/pages/cart/components/cart_tile.dart';
-import 'package:app_mercadinho/src/pages/common_widgets/payment_dialog.dart';
 import 'package:app_mercadinho/src/services/utils_services.dart';
-import 'package:app_mercadinho/src/config/app_data.dart' as appData;
 
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);
@@ -21,6 +18,8 @@ class CartTab extends StatefulWidget {
 class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
 
+  final GetCartListController controller = GetCartListController();
+
   List<CartItemModel> cartItems = [];
 
   @override
@@ -28,11 +27,26 @@ class _CartTabState extends State<CartTab> {
     // TODO: implement initState
     super.initState();
 
-    getCartItemsList().then((value) {
-      setState(() {
+    // controller.getCartItemsList().then((value) {
+    //   setState(() {
+    //     cartItems = value;
+    //   });
+    // });
+
+    autorun((_) {
+      controller.getCartItemsList().then((value) {
         cartItems = value;
       });
     });
+
+    // reaction(
+    //   (_) => controller.getCartItemsList,
+    //   (_) => controller.getCartItemsList().then((value) {
+    //     setState(() {
+    //       cartItems = value;
+    //     });
+    //   }),
+    // );
   }
 
   void removeItemFromCart(CartItemModel cartItem) {
@@ -132,38 +146,30 @@ class _CartTabState extends State<CartTab> {
                         borderRadius: BorderRadius.circular(18),
                       ),
                     ),
-                    onPressed: () async{
-
-                      if(cartTotalPrice() > 0) {
-
+                    onPressed: () async {
+                      if (cartTotalPrice() > 0) {
                         //RETORNO DO ID DO PEDIDO
                         String? result = await showOrderConfirmation();
 
                         if (result != "") {
-                          
-                            showDialog(
+                          showDialog(
                             context: context,
                             builder: (_) {
                               return GetOrderId(orderId: result!);
                             },
                           );
-                            
                         } else {
                           utilsServices.showToast(
                             message: 'Pedido não confirmado',
                             isError: true,
                           );
                         }
-
-                      }else {
-
+                      } else {
                         utilsServices.showToast(
                           message: 'Insira ao menos um item no carrinho!',
                           isError: true,
                         );
-
                       }
-                        
                     },
                     child: const Text(
                       'Concluir pedido',
@@ -204,8 +210,7 @@ class _CartTabState extends State<CartTab> {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              onPressed: () async{
-
+              onPressed: () async {
                 //GERA UM NOVO PEDIDO
                 String numberOrder = "";
                 numberOrder = await orderCheckout(cartTotalPrice());
@@ -219,5 +224,9 @@ class _CartTabState extends State<CartTab> {
     );
   }
 
-
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 }
