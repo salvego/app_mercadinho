@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
     this.textInputType,
     this.enabled,
     this.inputFormatters,
+    this.readOnly = false,
     this.controller,
   }) : super(key: key);
 
@@ -25,6 +26,7 @@ class CustomTextField extends StatelessWidget {
   final Function(String) onChanged;
   final bool? enabled;
   final List<TextInputFormatter>? inputFormatters;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class CustomTextField extends StatelessWidget {
         onChanged: onChanged,
         enabled: enabled,
         inputFormatters: inputFormatters,
+        readOnly: readOnly,
         decoration: InputDecoration(
           hintText: hint,
           border: InputBorder.none,

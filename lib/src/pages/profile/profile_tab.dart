@@ -1,9 +1,10 @@
-import '../../controller/auth/api_change_password.dart';
-import '../../controller/auth/api_logout.dart';
+import 'package:app_mercadinho/src/controller/auth/change_password_controller.dart';
+import 'package:app_mercadinho/src/controller/auth/logout_controller.dart';
+import 'package:app_mercadinho/src/widgets/custom_icon_button.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:app_mercadinho/src/config/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/custom_text_field.dart';
-import 'package:app_mercadinho/src/config/app_data.dart' as appData;
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({Key? key}) : super(key: key);
@@ -13,6 +14,9 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+
+  final LogoutController logoutController = LogoutController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +25,7 @@ class _ProfileTabState extends State<ProfileTab> {
         actions: [
           IconButton(
             onPressed: () {
-              userLogout(context);
+              logoutController.userLogout(context);
             },
             icon: const Icon(
               Icons.logout,
@@ -33,38 +37,45 @@ class _ProfileTabState extends State<ProfileTab> {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
         children: [
-          // Email
-//          CustomTextField(
-//            readOnly: true,
-//            initialValue: goUser.email,
-//            icon: Icons.email,
-//            label: 'Email',
-//          ),
+         // Email
+         TextFormField(
+           readOnly: true,
+           initialValue: goUser.email,
+           decoration: const InputDecoration(
+            icon: Icon(Icons.email),
+            labelText: 'E-mail',
+          ),
+         ),
+
+         // Nome
+         TextFormField(
+           readOnly: true,
+           initialValue: goUser.usuario,
+           decoration: const InputDecoration(
+            icon: Icon(Icons.person),
+            labelText: 'Nome',
+          ),
+         ),
 //
-//          // Nome
-//          CustomTextField(
-//            readOnly: true,
-//            initialValue: goUser.usuario,
-//            icon: Icons.person,
-//            label: 'Nome',
-//          ),
+         // Celular
+         TextFormField(
+           readOnly: true,
+           initialValue: goUser.phone,
+           decoration: const InputDecoration(
+            icon: Icon(Icons.phone),
+            labelText: 'Celular',
+          ),
+         ),
 //
-//          // Celular
-//          CustomTextField(
-//            readOnly: true,
-//            initialValue: goUser.phone,
-//            icon: Icons.phone,
-//            label: 'Celular',
-//          ),
-//
-//          // CPF
-//          CustomTextField(
-//            readOnly: true,
-//            initialValue: goUser.cpf,
-//            icon: Icons.file_copy,
-//            label: 'CPF',
-//            isSecret: true,
-//          ),
+         // CPF
+         TextFormField(
+           readOnly: true,
+           initialValue: goUser.cpf,
+           decoration: const InputDecoration(
+            icon: Icon(Icons.file_copy),
+            labelText: 'CPF',
+          ),
+         ),
 
           // Botão para atualizar a senha
           SizedBox(
@@ -91,9 +102,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   Future<bool?> updatePassword() {
 
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController currentPassController = TextEditingController();
-    final TextEditingController newPassController = TextEditingController();
+    final ChangePasswordController controller = ChangePasswordController();
 
 
     return showDialog(
@@ -125,27 +134,50 @@ class _ProfileTabState extends State<ProfileTab> {
                     ),
 
                     // E-mail
-//                     CustomTextField(
-//                      controller: emailController,
-//                      icon: Icons.lock,
-//                      label: 'E-mail',
-//                    ),
+                    Observer(builder: (_) {
+                      return CustomTextField(
+                        hint: 'E-mail',
+                        prefix: const Icon(Icons.account_circle),
+                        textInputType: TextInputType.emailAddress,
+                        onChanged: controller.setEmail,
+                        enabled: !controller.loading,
+                      );
+                    }),
 //
-//                    // Senha Atual
-//                     CustomTextField(
-//                      controller: currentPassController,
-//                      isSecret: true,
-//                      icon: Icons.lock_outline,
-//                      label: 'Senha Atual',
-//                    ),
-//
-//                    // Nova senha
-//                     CustomTextField(
-//                      controller: newPassController,
-//                      isSecret: true,
-//                      icon: Icons.lock_outline,
-//                      label: 'Nova senha',
-//                    ),
+                   Observer(builder: (_) {
+                      return CustomTextField(
+                        hint: 'Senha Atual',
+                        prefix: const Icon(Icons.lock),
+                        obscure: !controller.passwordVisible,
+                        onChanged: controller.setCurrentPassword,
+                        enabled: !controller.loading,
+                        suffix: CustomIconButton(
+                          radius: 32,
+                          iconData: controller.passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          onTap: controller.togglePasswordVisible,
+                        ),
+                      );
+                    }),
+
+                   // Nova senha
+                   Observer(builder: (_) {
+                      return CustomTextField(
+                        hint: 'Nova Senha',
+                        prefix: const Icon(Icons.lock),
+                        obscure: !controller.passwordVisible,
+                        onChanged: controller.setNewPassword,
+                        enabled: !controller.loading,
+                        suffix: CustomIconButton(
+                          radius: 32,
+                          iconData: controller.passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          onTap: controller.togglePasswordVisible,
+                        ),
+                      );
+                    }),
 
                     // Botão de confirmação
                     SizedBox(
@@ -157,12 +189,7 @@ class _ProfileTabState extends State<ProfileTab> {
                           ),
                         ),
                         onPressed: () {
-
-                          changePasssword(
-                              emailController.text,
-                              currentPassController.text,
-                              newPassController.text,
-                              context);
+                          controller.changePasssword(context);
                         },
                         child: const Text('Atualizar'),
                       ),

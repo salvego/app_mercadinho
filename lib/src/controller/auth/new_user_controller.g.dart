@@ -137,6 +137,13 @@ mixin _$NewUserController on NewUserControllerBase, Store {
     });
   }
 
+  final _$newUserAsyncAction = AsyncAction('NewUserControllerBase.newUser');
+
+  @override
+  Future<void> newUser(BuildContext context) {
+    return _$newUserAsyncAction.run(() => super.newUser(context));
+  }
+
   final _$NewUserControllerBaseActionController =
       ActionController(name: 'NewUserControllerBase');
 

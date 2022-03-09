@@ -59,6 +59,7 @@ abstract class NewUserControllerBase with Store {
   @observable
   bool loading = false;
 
+  @action
   Future<void> newUser(BuildContext context) async {
 
     loading = true;
