@@ -35,7 +35,9 @@ class _CartTabState extends State<CartTab> {
 
     autorun((_) {
       controller.getCartItemsList().then((value) {
-        cartItems = value;
+        setState(() {
+          cartItems = value;
+        });
       });
     });
 
