@@ -1,4 +1,6 @@
 import 'package:app_mercadinho/src/controller/cart/get_cart_list_controller.dart';
+import 'package:app_mercadinho/src/helpers/message.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import '../../controller/order/api_order_checkout.dart';
 import 'package:app_mercadinho/src/pages/orders/components/get_order_id_widget.dart';
@@ -20,58 +22,7 @@ class _CartTabState extends State<CartTab> {
 
   final GetCartListController controller = GetCartListController();
 
-  List<CartItemModel> cartItems = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    // controller.getCartItemsList().then((value) {
-    //   setState(() {
-    //     cartItems = value;
-    //   });
-    // });
-
-    autorun((_) {
-      controller.getCartItemsList().then((value) {
-        setState(() {
-          cartItems = value;
-        });
-      });
-    });
-
-    // reaction(
-    //   (_) => controller.getCartItemsList,
-    //   (_) => controller.getCartItemsList().then((value) {
-    //     setState(() {
-    //       cartItems = value;
-    //     });
-    //   }),
-    // );
-  }
-
-  void removeItemFromCart(CartItemModel cartItem) {
-    setState(() {
-      cartItems.remove(cartItem);
-
-      utilsServices.showToast(
-          message: '${cartItem.item.title} removido(a) do carrinho');
-    });
-  }
-
-  double cartTotalPrice() {
-    double total = 0;
-
-    for (var item in cartItems) {
-      setState(() {
-        total += item.totalPrice();
-      });
-    }
-
-    return total;
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,20 +33,25 @@ class _CartTabState extends State<CartTab> {
         children: [
           // Lista de itens do carrinho
           Expanded(
-            child: ListView.builder(
-              //itemCount: appData.cartItems.length,
-              itemCount: cartItems.length,
+            child: Observer(builder: (_){
+              return ListView.builder(
+                //itemCount: appData.cartItems.length,
+                //itemCount: cartItems.length,
+                itemCount: controller.cartItemList.length,
 
-              itemBuilder: (_, index) {
-                return CartTile(
-                  //cartItem: appData.cartItems[index],
+                itemBuilder: (_, index) {
+                  return CartTile(
+                    //cartItem: appData.cartItems[index],
 
-                  cartItem: cartItems[index],
-                  remove: removeItemFromCart,
-                  cartTotalPrice: cartTotalPrice,
-                );
-              },
-            ),
+                    //cartItem: cartItems[index],
+
+                    cartItem: controller.cartItemList[index],
+                    remove: controller.removeItemFromCart,
+                    cartTotalPrice: controller.cartTotalPrice,
+                  );
+                },
+              );
+            }),
           ),
 
           // Total e botão de concluir o pedido
@@ -128,14 +84,16 @@ class _CartTabState extends State<CartTab> {
                           fontSize: 12,
                         ),
                       ),
-                      Text(
-                        utilsServices.priceToCurrency(cartTotalPrice()),
-                        style: TextStyle(
-                          fontSize: 23,
-                          color: CustomColors.customSwatchColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      Observer(builder: (_){
+                        return Text(
+                          utilsServices.priceToCurrency(controller.cartTotalPrice()),
+                          style: TextStyle(
+                            fontSize: 23,
+                            color: CustomColors.customSwatchColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      }),
                     ],
                   ),
                 ),
@@ -149,7 +107,7 @@ class _CartTabState extends State<CartTab> {
                       ),
                     ),
                     onPressed: () async {
-                      if (cartTotalPrice() > 0) {
+                      if (controller.cartTotalPrice() > 0) {
                         //RETORNO DO ID DO PEDIDO
                         String? result = await showOrderConfirmation();
 
@@ -215,7 +173,7 @@ class _CartTabState extends State<CartTab> {
               onPressed: () async {
                 //GERA UM NOVO PEDIDO
                 String numberOrder = "";
-                numberOrder = await orderCheckout(cartTotalPrice());
+                numberOrder = await orderCheckout(controller.cartTotalPrice());
                 Navigator.of(context).pop(numberOrder);
               },
               child: const Text('Sim'),
@@ -226,9 +184,5 @@ class _CartTabState extends State<CartTab> {
     );
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
+ 
 }

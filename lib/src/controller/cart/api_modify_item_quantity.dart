@@ -14,8 +14,50 @@ void modifyQuantityItemCartList(
   await function.execute(parameters: params);
 
   if (parseResponse.success) {
-    return showSuccess("Quantity was successfully alter!", context);
+    //return showSuccess("Quantity was successfully alter!", context);
+
+    if (quantity == 0) {
+        AlertDialog(
+        title: const Text("Success!"),
+        content: const Text("Quantidade removido(a) com sucesso!"),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    }
+    else
+    {
+      AlertDialog(
+        title: const Text("Success!"),
+        content: const Text("Quantidade alterado(a) com sucesso!"),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    }
+    
   } else {
-    showError("Quantity already exists or invalid!", context);
+    AlertDialog(
+        title: const Text("Error!"),
+        content: const Text("Quantidade não existe ou inválido!"),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
   }
 }
