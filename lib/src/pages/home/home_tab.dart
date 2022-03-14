@@ -1,16 +1,12 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
-import '../../controller/category/api_get_category_list.dart';
+import 'package:app_mercadinho/src/controller/category/get_category_list_controller.dart';
 import 'package:app_mercadinho/src/controller/product/api_get_product_list.dart';
-import 'package:app_mercadinho/src/models/category_model.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/home/components/category_tile.dart';
-import 'package:app_mercadinho/src/config/app_data.dart' as appData;
 import 'package:app_mercadinho/src/pages/home/components/item_tile.dart';
-import '../../controller/category/api_get_category_list.dart'
-    as apiCategory;
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -20,32 +16,28 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  GetCategoryListController controller = GetCategoryListController();
+
   String selectedCategory = 'Frutas';
 
   List categories = [];
-  List products = [] ;
+  List products = [];
 
   @override
   void initState() {
-
     super.initState();
 
-      getCategoryList().then((value) {
-
+    controller.getCategoryList().then((value) {
       setState(() {
         categories = value;
       });
-
     });
 
-      getProductList(categoryId: 'HH7vSREpsb').then((value) {
-
-        setState((){
-          products = value;
-        });
-
+    getProductList(categoryId: 'HH7vSREpsb').then((value) {
+      setState(() {
+        products = value;
       });
-
+    });
   }
 
   GlobalKey<CartIconKey> globalKeyCartItems = GlobalKey<CartIconKey>();
@@ -58,7 +50,6 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       // App bar
       appBar: AppBar(
@@ -171,33 +162,29 @@ class _HomeTabState extends State<HomeTab> {
 
                         selectedCategory = categories[index].title;
 
-                        getProductList(page: 0, itemsPerPage:5, categoryId: categories[index].id).then((value) {
-
-                          setState((){
+                        getProductList(
+                                page: 0,
+                                itemsPerPage: 5,
+                                categoryId: categories[index].id)
+                            .then((value) {
+                          setState(() {
                             products = value;
                           });
-
                         });
-
-
                       });
                     },
                     //category: appData.categories[index],
                     category: categories[index].title,
 
-
                     //isSelected: appData.categories[index] == selectedCategory,
 
-                      isSelected: categories[index].title == selectedCategory,
-
-
+                    isSelected: categories[index].title == selectedCategory,
                   );
                 },
                 separatorBuilder: (_, index) => const SizedBox(width: 10),
                 //itemCount: appData.categories.length,
 
                 itemCount: categories.length,
-
               ),
             ),
 
@@ -219,7 +206,6 @@ class _HomeTabState extends State<HomeTab> {
                   return ItemTile(
                       //item: appData.items[index],
                       item: products[index],
-
                       cartAnimationMethod: itemSelectedCartAnimations);
                 },
               ),
@@ -230,5 +216,3 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 }
-
-

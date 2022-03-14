@@ -1,4 +1,5 @@
-import '../../controller/cart/api_new_item_cart_list.dart';
+
+import 'package:app_mercadinho/src/controller/cart/new_item_cart_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/models/item_model.dart';
@@ -19,6 +20,8 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   final UtilsServices utilsServices = UtilsServices();
+
+  NewItemCartListController controller = NewItemCartListController();
 
   double cartItemQuantity = 1;
 
@@ -118,7 +121,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           onPressed: () {
 
                             // ADD ITEM NO CARRINHO
-                            newItemCartList(
+                            controller.newItemCartList(
                               cartItemQuantity,
                               widget.item.id,
                               context,

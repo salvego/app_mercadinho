@@ -5,12 +5,12 @@ import 'package:mobx/mobx.dart';
 
 part 'new_item_cart_list_controller.g.dart';
 
-class NewItemCartListController = NewItemCartListControllerBase with _$NewItemCartListController;
+class NewItemCartListController = NewItemCartListControllerBase
+    with _$NewItemCartListController;
 
 abstract class NewItemCartListControllerBase with Store {
-
   void newItemCartList(
-    double quantity, String productId, BuildContext context) async {
+      double quantity, String productId, BuildContext context) async {
     final ParseCloudFunction function = ParseCloudFunction('add-item-to-cart');
     final Map<String, dynamic> params = <String, dynamic>{
       'quantity': quantity,
@@ -26,7 +26,4 @@ abstract class NewItemCartListControllerBase with Store {
       showError("ItemCartList already exists or invalid!", context);
     }
   }
-
-
-  
 }

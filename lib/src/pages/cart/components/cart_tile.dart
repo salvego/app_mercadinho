@@ -1,5 +1,4 @@
-import '../../../controller/cart/api_modify_item_quantity.dart';
-import 'package:app_mercadinho/src/config/app_data.dart';
+import 'package:app_mercadinho/src/controller/cart/modify_item_quantity_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/models/cart_item_model.dart';
@@ -24,6 +23,8 @@ class CartTile extends StatefulWidget {
 
 class _CartTileState extends State<CartTile> {
   final UtilsServices utilsServices = UtilsServices();
+
+  ModifyItemQuantityController controller = ModifyItemQuantityController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class _CartTileState extends State<CartTile> {
 
             if (quantity == 0) {
               // MODIFICA A QUANTIDADE DO ITEM NO CARRINHO NO BACK4APP (BANCO DE DADOS)
-              modifyQuantityItemCartList(
+              controller.modifyQuantityItemCartList(
                 widget.cartItem.id,
                 widget.cartItem.quantity,
                 context,
@@ -78,13 +79,12 @@ class _CartTileState extends State<CartTile> {
               //widget.remove(widget.cartItem);
             } else {
               // MODIFICA A QUANTIDADE DO ITEM NO CARRINHO NO BACK4APP (BANCO DE DADOS)
-              modifyQuantityItemCartList(
+              controller.modifyQuantityItemCartList(
                 widget.cartItem.id,
                 widget.cartItem.quantity,
                 context,
               );
             }
-            
           },
           isRemovable: true,
         ),
