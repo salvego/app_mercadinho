@@ -1,3 +1,4 @@
+import 'package:app_mercadinho/src/controller/cart/new_item_cart_list_controller.dart';
 
 import '../../../controller/cart/api_new_item_cart_list.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class _ItemTileState extends State<ItemTile> {
   final GlobalKey imageGk = GlobalKey();
 
   final UtilsServices utilsServices = UtilsServices();
+
+  NewItemCartListController controller = NewItemCartListController();
 
   IconData tileIcon = Icons.add_shopping_cart_outlined;
 
@@ -116,7 +119,7 @@ class _ItemTileState extends State<ItemTile> {
                 onTap: () {
                   switchIcon();
 
-                  newItemCartList(
+                  controller.newItemCartList(
                     1.0,
                     widget.item.id,
                     context,

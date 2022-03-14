@@ -19,7 +19,7 @@ abstract class GetCartListControllerBase with Store {
 
       _loadCartItemList();
       cartTotalPrice();
-      removeItemFromCart;
+      //removeItemFromCart;
 
     });
 
