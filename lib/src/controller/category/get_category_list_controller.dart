@@ -8,6 +8,25 @@ class GetCategoryListController = GetCategoryListControllerBase
     with _$GetCategoryListController;
 
 abstract class GetCategoryListControllerBase with Store {
+  GetCategoryListControllerBase() {
+    autorun((_) {
+      _loadCategoryList();
+    });
+  }
+
+  ObservableList categoryList = ObservableList();
+
+  @action
+  void setCategoryList(List catList) {
+    categoryList.clear();
+    categoryList.addAll(catList);
+  }
+
+  Future<void> _loadCategoryList() async {
+    final categoryList = await getCategoryList();
+    setCategoryList(categoryList);
+  }
+
   Future<List> getCategoryList() async {
     final ParseCloudFunction function = ParseCloudFunction('get-category-list');
     final ParseResponse parseResponse = await function.execute();

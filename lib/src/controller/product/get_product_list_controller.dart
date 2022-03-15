@@ -8,7 +8,27 @@ class GetProductListController = GetProductListControllerBase
     with _$GetProductListController;
 
 abstract class GetProductListControllerBase with Store {
-  Future<List> getProductList({int? page, int? itemsPerPage, String? categoryId}) async {
+  GetProductListControllerBase() {
+    autorun((_) {
+      _loadItemList();
+    });
+  }
+
+  ObservableList productList = ObservableList();
+
+  @action
+  void setProductList(List itemList) {
+    productList.clear();
+    productList.addAll(itemList);
+  }
+
+  Future<void> _loadItemList() async {
+    final productList = await getProductList();
+    setProductList(productList);
+  }
+
+  Future<List> getProductList(
+      {int? page, int? itemsPerPage, String? categoryId}) async {
     final ParseCloudFunction function = ParseCloudFunction('get-product-list');
 
     final Map<String, dynamic> params = <String, dynamic>{
@@ -22,10 +42,7 @@ abstract class GetProductListControllerBase with Store {
 
     if (parseResponse.success) {
       if (parseResponse.result != null) {
-
-        return parseResponse.result
-            .map((e) => ItemModel.fromJson(e))
-            .toList();
+        return parseResponse.result.map((e) => ItemModel.fromJson(e)).toList();
       }
     }
 

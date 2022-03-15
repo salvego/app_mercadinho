@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/home/components/category_tile.dart';
 import 'package:app_mercadinho/src/pages/home/components/item_tile.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -21,18 +22,11 @@ class _HomeTabState extends State<HomeTab> {
 
   String selectedCategory = 'Frutas';
 
-  List categories = [];
   List products = [];
 
   @override
   void initState() {
     super.initState();
-
-    controllerCategory.getCategoryList().then((value) {
-      setState(() {
-        categories = value;
-      });
-    });
 
     controllerProduct.getProductList(categoryId: 'HH7vSREpsb').then((value) {
       setState(() {
@@ -153,40 +147,37 @@ class _HomeTabState extends State<HomeTab> {
             Container(
               padding: const EdgeInsets.only(left: 25),
               height: 40,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (_, index) {
-                  return CategoryTile(
-                    onPressed: () {
-                      setState(() {
-                        //selectedCategory = appData.categories[index];
+              child: Observer(builder: (_) {
+                return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (_, index) {
+                    return CategoryTile(
+                      onPressed: () {
+                        selectedCategory =
+                            controllerCategory.categoryList[index].title;
 
-                        selectedCategory = categories[index].title;
-
-                        controllerProduct.getProductList(
+                        controllerProduct
+                            .getProductList(
                                 page: 0,
                                 itemsPerPage: 5,
-                                categoryId: categories[index].id)
+                                categoryId:
+                                    controllerCategory.categoryList[index].id)
                             .then((value) {
                           setState(() {
                             products = value;
                           });
                         });
-                      });
-                    },
-                    //category: appData.categories[index],
-                    category: categories[index].title,
-
-                    //isSelected: appData.categories[index] == selectedCategory,
-
-                    isSelected: categories[index].title == selectedCategory,
-                  );
-                },
-                separatorBuilder: (_, index) => const SizedBox(width: 10),
-                //itemCount: appData.categories.length,
-
-                itemCount: categories.length,
-              ),
+                      },
+                      category: controllerCategory.categoryList[index].title,
+                      isSelected:
+                          controllerCategory.categoryList[index].title ==
+                              selectedCategory,
+                    );
+                  },
+                  separatorBuilder: (_, index) => const SizedBox(width: 10),
+                  itemCount: controllerCategory.categoryList.length,
+                );
+              }),
             ),
 
             // Grid
