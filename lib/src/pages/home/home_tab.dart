@@ -1,7 +1,7 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:app_mercadinho/src/controller/category/get_category_list_controller.dart';
-import 'package:app_mercadinho/src/controller/product/api_get_product_list.dart';
+import 'package:app_mercadinho/src/controller/product/get_product_list_controller.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
@@ -16,7 +16,8 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  GetCategoryListController controller = GetCategoryListController();
+  GetCategoryListController controllerCategory = GetCategoryListController();
+  GetProductListController controllerProduct = GetProductListController();
 
   String selectedCategory = 'Frutas';
 
@@ -27,13 +28,13 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
 
-    controller.getCategoryList().then((value) {
+    controllerCategory.getCategoryList().then((value) {
       setState(() {
         categories = value;
       });
     });
 
-    getProductList(categoryId: 'HH7vSREpsb').then((value) {
+    controllerProduct.getProductList(categoryId: 'HH7vSREpsb').then((value) {
       setState(() {
         products = value;
       });
@@ -162,7 +163,7 @@ class _HomeTabState extends State<HomeTab> {
 
                         selectedCategory = categories[index].title;
 
-                        getProductList(
+                        controllerProduct.getProductList(
                                 page: 0,
                                 itemsPerPage: 5,
                                 categoryId: categories[index].id)
