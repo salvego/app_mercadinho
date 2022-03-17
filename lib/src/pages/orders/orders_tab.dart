@@ -28,7 +28,6 @@ class _OrdersTabState extends State<OrdersTab> {
             orderId: controller.orderList[index].id,
             order: controller.orderList[index],
           ),
-          //itemCount: appData.orders.length,
           itemCount: controller.orderList.length,
         );
       }),

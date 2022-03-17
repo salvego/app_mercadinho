@@ -1,10 +1,11 @@
-import 'package:app_mercadinho/src/controller/order/api_get_order_items_list.dart';
+import 'package:app_mercadinho/src/controller/order/get_order_items_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/models/cart_item_model.dart';
 import 'package:app_mercadinho/src/models/order_model.dart';
 import 'package:app_mercadinho/src/pages/common_widgets/payment_dialog.dart';
 import 'package:app_mercadinho/src/pages/orders/components/order_status_widget.dart';
 import 'package:app_mercadinho/src/services/utils_services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class OrderTile extends StatefulWidget {
   final String orderId;
@@ -21,19 +22,7 @@ class OrderTile extends StatefulWidget {
 }
 
 class _OrderTileState extends State<OrderTile> {
-  List<CartItemModel> cartItems = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    getOrderItemsList(widget.orderId).then((value) {
-      setState(() {
-        cartItems = value;
-      });
-    });
-  }
+  GetOrderItemsListController controller = GetOrderItemsListController();
 
   final UtilsServices utilsServices = UtilsServices();
 
@@ -87,15 +76,17 @@ class _OrderTileState extends State<OrderTile> {
                     flex: 3,
                     child: SizedBox(
                       height: 150,
-                      child: ListView.builder(
-                        itemCount: cartItems.length,
-                        itemBuilder: (_, index) {
-                          return _OrderItemWidget(
-                            utilsServices: utilsServices,
-                            orderItem: cartItems[index],
-                          );
-                        },
-                      ),
+                      child: Observer(builder: (_) {
+                        return ListView.builder(
+                          itemCount: controller.orderItemsList.length,
+                          itemBuilder: (_, index) {
+                            return _OrderItemWidget(
+                              utilsServices: utilsServices,
+                              orderItem: controller.orderItemsList[index],
+                            );
+                          },
+                        );
+                      }),
                     ),
                   ),
 

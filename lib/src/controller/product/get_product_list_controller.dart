@@ -40,11 +40,6 @@ abstract class GetProductListControllerBase with Store {
     productList.addAll(itemList);
   }
 
-  
-  // Future<void> _loadItemList() async {
-  //   final productList = await getProductList();
-  //   setProductList(productList);
-  // }
 
   Future<List> getProductList(
       {int? page, int? itemsPerPage, String? categoryId}) async {
