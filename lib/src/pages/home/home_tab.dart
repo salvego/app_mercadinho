@@ -24,16 +24,16 @@ class _HomeTabState extends State<HomeTab> {
 
   List products = [];
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    controllerProduct.getProductList(categoryId: 'HH7vSREpsb').then((value) {
-      setState(() {
-        products = value;
-      });
-    });
-  }
+  //   controllerProduct.getProductList(categoryId: 'HH7vSREpsb').then((value) {
+  //     setState(() {
+  //       products = value;
+  //     });
+  //   });
+  // }
 
   GlobalKey<CartIconKey> globalKeyCartItems = GlobalKey<CartIconKey>();
 
@@ -153,20 +153,26 @@ class _HomeTabState extends State<HomeTab> {
                   itemBuilder: (_, index) {
                     return CategoryTile(
                       onPressed: () {
-                        selectedCategory =
+                        setState(() {
+                          selectedCategory =
                             controllerCategory.categoryList[index].title;
-
-                        controllerProduct
-                            .getProductList(
-                                page: 0,
-                                itemsPerPage: 5,
-                                categoryId:
-                                    controllerCategory.categoryList[index].id)
-                            .then((value) {
-                          setState(() {
-                            products = value;
-                          });
                         });
+                        
+
+                        controllerProduct.categoryId = controllerCategory.categoryList[index].id;
+
+                        // controllerProduct
+                        //     .getProductList(
+                        //         page: 0,
+                        //         itemsPerPage: 5,
+                        //         categoryId:
+                        //             controllerCategory.categoryList[index].id)
+                        //     .then((value) {
+                        //   setState(() {
+                        //     products = value;
+                        //   });
+                        // });
+
                       },
                       category: controllerCategory.categoryList[index].title,
                       isSelected:
@@ -182,25 +188,27 @@ class _HomeTabState extends State<HomeTab> {
 
             // Grid
             Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                physics: const BouncingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 9 / 11.5,
-                ),
-                //itemCount: appData.items.length,
-                itemCount: products.length,
+              child: Observer(builder: (_){
+                return GridView.builder(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  physics: const BouncingScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 9 / 11.5,
+                  ),
+                  //itemCount: appData.items.length,
+                  itemCount: controllerProduct.productList.length,
 
-                itemBuilder: (_, index) {
-                  return ItemTile(
-                      //item: appData.items[index],
-                      item: products[index],
-                      cartAnimationMethod: itemSelectedCartAnimations);
-                },
-              ),
+                  itemBuilder: (_, index) {
+                    return ItemTile(
+                        //item: appData.items[index],
+                        item: controllerProduct.productList[index],
+                        cartAnimationMethod: itemSelectedCartAnimations);
+                  },
+                );
+              }),
             ),
           ],
         ),

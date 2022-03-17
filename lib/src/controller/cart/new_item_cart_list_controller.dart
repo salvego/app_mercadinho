@@ -10,7 +10,7 @@ class NewItemCartListController = NewItemCartListControllerBase
 
 abstract class NewItemCartListControllerBase with Store {
   void newItemCartList(
-      double quantity, String productId, BuildContext context) async {
+      double quantity, String productId, BuildContext contextMessage) async {
     final ParseCloudFunction function = ParseCloudFunction('add-item-to-cart');
     final Map<String, dynamic> params = <String, dynamic>{
       'quantity': quantity,
@@ -21,9 +21,9 @@ abstract class NewItemCartListControllerBase with Store {
         await function.execute(parameters: params);
 
     if (parseResponse.success) {
-      return showSuccess("ItemCartList was successfully added!", context);
+      return showSuccess("ItemCartList was successfully added!", contextMessage);
     } else {
-      showError("ItemCartList already exists or invalid!", context);
+      showError("ItemCartList already exists or invalid!", contextMessage);
     }
   }
 }

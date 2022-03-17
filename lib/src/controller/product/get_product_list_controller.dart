@@ -9,23 +9,42 @@ class GetProductListController = GetProductListControllerBase
 
 abstract class GetProductListControllerBase with Store {
   GetProductListControllerBase() {
-    autorun((_) {
-      _loadItemList();
+    autorun((_) async {
+    
+      final newProducts = await getProductList(page: page, itemsPerPage: itemsPerPage, categoryId: categoryId);
+      setProductList(newProducts);
+
     });
   }
 
   ObservableList productList = ObservableList();
 
+  @observable
+  String categoryId = 'HH7vSREpsb';
+
+  @action
+  void setCategoryId(String value) {
+    categoryId = value;
+  }
+
+  @observable
+  int page = 0;
+
+  @observable
+  int itemsPerPage = 10;
+
+  
   @action
   void setProductList(List itemList) {
     productList.clear();
     productList.addAll(itemList);
   }
 
-  Future<void> _loadItemList() async {
-    final productList = await getProductList();
-    setProductList(productList);
-  }
+  
+  // Future<void> _loadItemList() async {
+  //   final productList = await getProductList();
+  //   setProductList(productList);
+  // }
 
   Future<List> getProductList(
       {int? page, int? itemsPerPage, String? categoryId}) async {
