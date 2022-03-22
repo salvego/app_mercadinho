@@ -8,29 +8,7 @@ class GetOrderIdListController = GetOrderIdListControllerBase
     with _$GetOrderIdListController;
 
 abstract class GetOrderIdListControllerBase with Store {
-  GetOrderIdListControllerBase() {
-    autorun((_) async {
-      final newOrder = await getOrderIdList(id: id);
-      setOrderIdList(newOrder);
-    });
-  }
-
-  ObservableList orderIdList = ObservableList();
-
-  @observable
-  String? id;
-
-  @action
-  void setId(String value) {
-    id = value;
-  }
-
-  @action
-  void setOrderIdList(List idList) {
-    orderIdList.clear();
-    orderIdList.addAll(idList);
-  }
-
+  
   Future<List<OrderModel>> getOrderIdList({String? id}) async {
     final ParseCloudFunction function = ParseCloudFunction('get-order-id');
     final Map<String, dynamic> params = <String, dynamic>{

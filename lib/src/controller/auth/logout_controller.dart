@@ -9,14 +9,11 @@ part 'logout_controller.g.dart';
 class LogoutController = LogoutControllerBase with _$LogoutController;
 
 abstract class LogoutControllerBase with Store {
-  
-
   @observable
   bool loggedIn = false;
 
   @action
   Future<void> userLogout(BuildContext context) async {
-
     final ParseCloudFunction function = ParseCloudFunction('logout');
 
     final ParseResponse parseResponse = await function.execute();
@@ -31,6 +28,4 @@ abstract class LogoutControllerBase with Store {
       showError(parseResponse.error!.message, context);
     }
   }
-
-
 }

@@ -1,12 +1,9 @@
 import 'package:app_mercadinho/src/controller/cart/get_cart_list_controller.dart';
-import 'package:app_mercadinho/src/helpers/message.dart';
+import 'package:app_mercadinho/src/controller/order/order_checkout_controller.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
-import '../../controller/order/api_order_checkout.dart';
 import 'package:app_mercadinho/src/pages/orders/components/get_order_id_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mercadinho/src/config/custom_colors.dart';
-import 'package:app_mercadinho/src/models/cart_item_model.dart';
 import 'package:app_mercadinho/src/pages/cart/components/cart_tile.dart';
 import 'package:app_mercadinho/src/services/utils_services.dart';
 
@@ -21,8 +18,8 @@ class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
 
   final GetCartListController controller = GetCartListController();
+  final OrderCheckoutController controllerOrder = OrderCheckoutController();
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +30,7 @@ class _CartTabState extends State<CartTab> {
         children: [
           // Lista de itens do carrinho
           Expanded(
-            child: Observer(builder: (_){
+            child: Observer(builder: (_) {
               return ListView.builder(
                 //itemCount: appData.cartItems.length,
                 //itemCount: cartItems.length,
@@ -84,9 +81,10 @@ class _CartTabState extends State<CartTab> {
                           fontSize: 12,
                         ),
                       ),
-                      Observer(builder: (_){
+                      Observer(builder: (_) {
                         return Text(
-                          utilsServices.priceToCurrency(controller.cartTotalPrice()),
+                          utilsServices
+                              .priceToCurrency(controller.cartTotalPrice()),
                           style: TextStyle(
                             fontSize: 23,
                             color: CustomColors.customSwatchColor,
@@ -173,7 +171,7 @@ class _CartTabState extends State<CartTab> {
               onPressed: () async {
                 //GERA UM NOVO PEDIDO
                 String numberOrder = "";
-                numberOrder = await orderCheckout(controller.cartTotalPrice());
+                numberOrder = await controllerOrder.orderCheckout(controller.cartTotalPrice());
                 Navigator.of(context).pop(numberOrder);
               },
               child: const Text('Sim'),
@@ -183,6 +181,4 @@ class _CartTabState extends State<CartTab> {
       },
     );
   }
-
- 
 }
