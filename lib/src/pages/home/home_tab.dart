@@ -1,5 +1,6 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
+import 'package:app_mercadinho/src/controller/cart/get_cart_list_controller.dart';
 import 'package:app_mercadinho/src/controller/category/get_category_list_controller.dart';
 import 'package:app_mercadinho/src/controller/product/get_product_list_controller.dart';
 import 'package:badges/badges.dart';
@@ -19,21 +20,9 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   GetCategoryListController controllerCategory = GetCategoryListController();
   GetProductListController controllerProduct = GetProductListController();
+  GetCartListController controllerCart = GetCartListController();
 
   String selectedCategory = 'Frutas';
-
-  List products = [];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   controllerProduct.getProductList(categoryId: 'HH7vSREpsb').then((value) {
-  //     setState(() {
-  //       products = value;
-  //     });
-  //   });
-  // }
 
   GlobalKey<CartIconKey> globalKeyCartItems = GlobalKey<CartIconKey>();
 
@@ -82,9 +71,9 @@ class _HomeTabState extends State<HomeTab> {
               onTap: () {},
               child: Badge(
                 badgeColor: CustomColors.customContrastColor,
-                badgeContent: const Text(
-                  '2',
-                  style: TextStyle(
+                badgeContent: Text(
+                  controllerCart.countItemCart() > 0 ? '0' : controllerCart.countItemCart().toString(),
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
                   ),
@@ -155,11 +144,11 @@ class _HomeTabState extends State<HomeTab> {
                       onPressed: () {
                         setState(() {
                           selectedCategory =
-                            controllerCategory.categoryList[index].title;
+                              controllerCategory.categoryList[index].title;
                         });
-                        
 
-                        controllerProduct.categoryId = controllerCategory.categoryList[index].id;
+                        controllerProduct.categoryId =
+                            controllerCategory.categoryList[index].id;
 
                         // controllerProduct
                         //     .getProductList(
@@ -172,7 +161,6 @@ class _HomeTabState extends State<HomeTab> {
                         //     products = value;
                         //   });
                         // });
-
                       },
                       category: controllerCategory.categoryList[index].title,
                       isSelected:
@@ -188,7 +176,7 @@ class _HomeTabState extends State<HomeTab> {
 
             // Grid
             Expanded(
-              child: Observer(builder: (_){
+              child: Observer(builder: (_) {
                 return GridView.builder(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   physics: const BouncingScrollPhysics(),
