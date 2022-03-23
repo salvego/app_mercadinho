@@ -64,7 +64,7 @@ abstract class GetCartListControllerBase with Store {
     double count = 0;
 
     for (var item in cartItemList) {
-      count++;
+      count += 1;
     }
 
     return count;

@@ -9,6 +9,7 @@ import 'package:app_mercadinho/src/config/custom_colors.dart';
 import 'package:app_mercadinho/src/pages/home/components/category_tile.dart';
 import 'package:app_mercadinho/src/pages/home/components/item_tile.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:app_mercadinho/src/services/utils_services.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class _HomeTabState extends State<HomeTab> {
   GetCategoryListController controllerCategory = GetCategoryListController();
   GetProductListController controllerProduct = GetProductListController();
   GetCartListController controllerCart = GetCartListController();
+  final UtilsServices utilsServices = UtilsServices();
 
   String selectedCategory = 'Frutas';
 
@@ -70,14 +72,19 @@ class _HomeTabState extends State<HomeTab> {
             child: GestureDetector(
               onTap: () {},
               child: Badge(
+                position: BadgePosition.topEnd(top: -15, end: 25),
+                shape: BadgeShape.square,
+                borderRadius: BorderRadius.circular(5),
                 badgeColor: CustomColors.customContrastColor,
-                badgeContent: Text(
-                  controllerCart.countItemCart() > 0 ? '0' : controllerCart.countItemCart().toString(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ),
+                badgeContent: Observer(builder: (_){
+                  return Text(
+                    controllerCart.countItemCart() > 0 ? utilsServices.priceToCurrency(controllerCart.cartTotalPrice()) +' | '+ controllerCart.countItemCart().toStringAsFixed(0) : 0.toStringAsFixed(0),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                  );
+                }),
                 child: AddToCartIcon(
                   key: globalKeyCartItems,
                   icon: Icon(
@@ -150,17 +157,6 @@ class _HomeTabState extends State<HomeTab> {
                         controllerProduct.categoryId =
                             controllerCategory.categoryList[index].id;
 
-                        // controllerProduct
-                        //     .getProductList(
-                        //         page: 0,
-                        //         itemsPerPage: 5,
-                        //         categoryId:
-                        //             controllerCategory.categoryList[index].id)
-                        //     .then((value) {
-                        //   setState(() {
-                        //     products = value;
-                        //   });
-                        // });
                       },
                       category: controllerCategory.categoryList[index].title,
                       isSelected:
@@ -190,8 +186,8 @@ class _HomeTabState extends State<HomeTab> {
                   itemCount: controllerProduct.productList.length,
 
                   itemBuilder: (_, index) {
+                    
                     return ItemTile(
-                        //item: appData.items[index],
                         item: controllerProduct.productList[index],
                         cartAnimationMethod: itemSelectedCartAnimations);
                   },
